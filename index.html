@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>Fruit Selector</title>
+    <style>
+        @font-face {
+            font-family: 'FredokaCustom';
+            src: url('fonts/Fredoka-Medium.ttf') format('truetype');
+            font-weight: 500;
+            font-style: normal;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'FredokaCustom', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            background-image: url('assets/background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            padding-top: 80px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            position: relative;
+            margin-top: 20px;
+            padding: 0 40px;
+        }
+
+        .header {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .reset-btn {
+            position: absolute;
+            top: 0;
+            left: 40px;
+            background: #1185A5;
+            color: white;
+            border: none;
+            padding: 20px 40px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 28px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(17, 133, 165, 0.4);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+        }
+
+        .reset-btn:hover {
+            background: #0f7490;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(17, 133, 165, 0.5);
+        }
+
+        .reset-btn:active {
+            transform: translateY(0);
+        }
+
+        .reset-btn img {
+            width: 40px;
+            height: 40px;
+            transition: opacity 0.3s ease;
+        }
+
+        .reset-btn.loading img {
+            display: none;
+        }
+
+        .reset-btn .btn-ellipsis-loader {
+            display: none;
+            position: relative;
+            width: 60px;
+            height: 15px;
+        }
+
+        .reset-btn.loading .btn-ellipsis-loader {
+            display: inline-block;
+        }
+
+        .btn-ellipsis-loader div {
+            position: absolute;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: white;
+            animation-timing-function: cubic-bezier(0, 1, 1, 0);
+        }
+
+        .btn-ellipsis-loader div:nth-child(1) {
+            left: 0;
+            animation: ellipsis1 0.6s infinite;
+        }
+
+        .btn-ellipsis-loader div:nth-child(2) {
+            left: 0;
+            animation: ellipsis2 0.6s infinite;
+        }
+
+        .btn-ellipsis-loader div:nth-child(3) {
+            left: 24px;
+            animation: ellipsis2 0.6s infinite;
+        }
+
+        .btn-ellipsis-loader div:nth-child(4) {
+            left: 48px;
+            animation: ellipsis3 0.6s infinite;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 64px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0C5065 0%, #1DB1E2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 0;
+        }
+
+        /* ── Main grid ── */
+        .fruits-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .fruits-grid.hidden { display: none; }
+
+        .fruits-grid.pop-up .fruit-card {
+            animation: popUp 0.5s ease forwards;
+        }
+
+        .fruit-card {
+            background: linear-gradient(135deg, #1185A5 0%, #0C5065 100%);
+            border-radius: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fruit-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .fruit-card:hover:not(.disabled)::before { opacity: 1; }
+
+        .fruit-card:hover:not(.disabled) {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(17, 133, 165, 0.4);
+        }
+
+        .fruit-card:active:not(.disabled) { transform: translateY(-4px); }
+
+        .fruit-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .fruit-card.disabled:hover {
+            transform: none;
+            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+        }
+
+        @keyframes popUp {
+            0%   { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .fruit-card:nth-child(1) { animation-delay: 0s; }
+        .fruit-card:nth-child(2) { animation-delay: 0.1s; }
+        .fruit-card:nth-child(3) { animation-delay: 0.2s; }
+        .fruit-card:nth-child(4) { animation-delay: 0.3s; }
+
+        .fruit-icon {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .cross-icon {
+            width: 180px;
+            height: 180px;
+            display: block;
+            margin: 0 auto 20px;
+            object-fit: contain;
+        }
+
+        .fruit-name {
+            font-size: 42px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0;
+            text-transform: lowercase;
+        }
+
+        .country-name { display: none; }
+
+        /* ── Loader ── */
+        .loader-container {
+            display: none;
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .loader-container.active { display: block; }
+
+        .ellipsis-loader {
+            display: inline-flex;
+            gap: 18px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 70px;
+            margin-bottom: 17px;
+        }
+
+        .ellipsis-loader div {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            animation: ellipsisAnimation 1.2s infinite ease-in-out;
+        }
+
+        .ellipsis-loader div:nth-child(1) { background: #0C7694; animation-delay: 0s; }
+        .ellipsis-loader div:nth-child(2) { background: #0D6782; animation-delay: 0.2s; }
+        .ellipsis-loader div:nth-child(3) { background: #053D4E; animation-delay: 0.4s; }
+
+        @keyframes ellipsisAnimation {
+            0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
+            40%            { transform: scale(1.2); opacity: 1; }
+        }
+
+        @keyframes ellipsis1 {
+            0%   { transform: scale(0); }
+            100% { transform: scale(1); }
+        }
+
+        @keyframes ellipsis2 {
+            0%   { transform: translate(0, 0); }
+            100% { transform: translate(24px, 0); }
+        }
+
+        @keyframes ellipsis3 {
+            0%   { transform: scale(1); }
+            100% { transform: scale(0); }
+        }
+
+        .loading-text {
+            font-size: 36px;
+            color: #10617C;
+            font-weight: 600;
+        }
+
+        .main-page.hidden { display: none; }
+
+        /* ── Branch page ── */
+        .branch-page {
+            display: none;
+        }
+
+        .branch-page.active { display: block; }
+
+        .branch-header {
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .branch-title {
+            text-align: center;
+            font-size: 52px;
+            font-weight: 600;
+            background: linear-gradient(135deg, #0C5065 0%, #1DB1E2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-top: 0;
+        }
+
+        .branch-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        /* When branch grid has 5 children, use 5 columns */
+        .branch-grid:has(.branch-card:nth-child(5)) {
+            grid-template-columns: repeat(5, 1fr);
+        }
+
+        .branch-grid.hidden { display: none; }
+
+        .branch-grid.pop-up .branch-card {
+            animation: popUp 0.5s ease forwards;
+        }
+
+        .branch-card {
+            background: linear-gradient(135deg, #1185A5 0%, #0C5065 100%);
+            border-radius: 25px;
+            padding: 50px 30px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .branch-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .branch-card:hover:not(.disabled)::before { opacity: 1; }
+
+        .branch-card:hover:not(.disabled) {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 35px rgba(17, 133, 165, 0.4);
+        }
+
+        .branch-card:active:not(.disabled) { transform: translateY(-4px); }
+
+        .branch-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .branch-card.disabled:hover {
+            transform: none;
+            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+        }
+
+        .branch-card:nth-child(1) { animation-delay: 0s; }
+        .branch-card:nth-child(2) { animation-delay: 0.1s; }
+        .branch-card:nth-child(3) { animation-delay: 0.2s; }
+        .branch-card:nth-child(4) { animation-delay: 0.3s; }
+
+        .branch-icon {
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 20px;
+            display: block;
+            object-fit: contain;
+        }
+
+        .branch-label {
+            font-size: 42px;
+            font-weight: 600;
+            color: white;
+            margin-bottom: 0;
+        }
+
+        /* ── Detail / answer page ── */
+        .detail-page {
+            display: none;
+            text-align: center;
+        }
+
+        .detail-page.active { display: block; }
+
+        .back-btn {
+            background: #1185A5;
+            color: white;
+            border: none;
+            padding: 22px 50px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-size: 32px;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(17, 133, 165, 0.4);
+            -webkit-tap-highlight-color: transparent;
+            user-select: none;
+            margin-bottom: 60px;
+        }
+
+        .back-btn:hover {
+            background: #0f7490;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(17, 133, 165, 0.5);
+        }
+
+        .back-btn:active { transform: translateY(0); }
+
+        .back-btn img {
+            width: 40px;
+            height: 40px;
+        }
+
+        .answer-text {
+            font-size: 90px;
+            color: #10617C;
+            font-weight: 600;
+            margin-top: 80px;
+            line-height: 1.3;
+        }
+
+        /* ── Responsive ── */
+        @media (max-width: 768px) {
+            body { padding: 15px; }
+
+            h1, .branch-title { font-size: 36px; }
+
+            .reset-btn { padding: 10px 18px; font-size: 14px; }
+            .reset-btn img { width: 20px; height: 20px; }
+
+            .fruits-grid, .branch-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 15px;
+                margin-top: 30px;
+            }
+
+            .fruit-card, .branch-card { padding: 25px 15px; border-radius: 15px; }
+
+            .fruit-icon, .cross-icon, .branch-icon { width: 80px; height: 80px; }
+
+            .fruit-name, .branch-label { font-size: 18px; }
+
+            .loader-container { margin-top: 60px; }
+            .ellipsis-loader div { width: 14px; height: 14px; }
+            .loading-text { font-size: 20px; }
+
+            .answer-text { font-size: 32px; }
+
+            .back-btn { padding: 12px 25px; font-size: 16px; }
+            .back-btn img { width: 20px; height: 20px; }
+        }
+
+        @media (max-width: 480px) {
+            h1, .branch-title { font-size: 28px; }
+
+            .reset-btn { padding: 8px 15px; font-size: 12px; }
+            .reset-btn img { width: 18px; height: 18px; }
+
+            .fruits-grid, .branch-grid {
+                grid-template-columns: 1fr;
+                gap: 12px;
+            }
+
+            .fruit-card, .branch-card { padding: 20px 12px; border-radius: 15px; }
+
+            .fruit-icon, .cross-icon, .branch-icon { width: 70px; height: 70px; }
+
+            .fruit-name, .branch-label { font-size: 16px; }
+
+            .loader-container { margin-top: 50px; }
+            .ellipsis-loader div { width: 12px; height: 12px; }
+            .loading-text { font-size: 18px; }
+
+            .answer-text { font-size: 26px; padding: 0 15px; }
+
+            .back-btn { padding: 10px 20px; font-size: 14px; }
+            .back-btn img { width: 18px; height: 18px; }
+        }
+
+        @media (max-width: 768px) and (orientation: landscape) {
+            .fruits-grid, .branch-grid { grid-template-columns: repeat(4, 1fr); }
+            .fruit-icon, .cross-icon, .branch-icon { width: 60px; height: 60px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- ══ MAIN PAGE ══ -->
+        <div class="main-page" id="mainPage">
+            <div class="header">
+                <button class="reset-btn" id="resetBtn" onclick="resetAll()">
+                    <img src="assets/refresh.png" alt="Reset" id="resetIcon">
+                    <div class="btn-ellipsis-loader">
+                        <div></div><div></div><div></div><div></div>
+                    </div>
+                    <span>Reset</span>
+                </button>
+                <h1>Pilih salah satu</h1>
+            </div>
+
+            <!-- Loader shown between transitions -->
+            <div class="loader-container" id="loader">
+                <div class="ellipsis-loader">
+                    <div></div><div></div><div></div>
+                </div>
+                <div class="loading-text">Loading . . .</div>
+            </div>
+
+            <div class="fruits-grid" id="fruitsGrid">
+                <div class="fruit-card" id="card-pineapple" onclick="selectFruit('pineapple')">
+                    <img src="assets/qurann.png" alt="Quran" class="fruit-icon">
+                    <div class="fruit-name">ayat<br>al-quran</div>
+                    <div class="country-name" id="pineapple-country"></div>
+                </div>
+                <div class="fruit-card" id="card-apple" onclick="selectFruit('apple')">
+                    <img src="assets/scroll.png" alt="Scroll" class="fruit-icon">
+                    <div class="fruit-name">Hadits<br>nabi</div>
+                    <div class="country-name" id="apple-country"></div>
+                </div>
+                <div class="fruit-card" id="card-watermelon" onclick="selectFruit('watermelon')">
+                    <img src="assets/doa.png" alt="Doa" class="fruit-icon">
+                    <div class="fruit-name">doa - doa</div>
+                    <div class="country-name" id="watermelon-country"></div>
+                </div>
+                <div class="fruit-card" id="card-orange" onclick="selectFruit('orange')">
+                    <img src="assets/arabic.png" alt="Arabic" class="fruit-icon">
+                    <div class="fruit-name">kosakata<br>bahasa arab</div>
+                    <div class="country-name" id="orange-country"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ BRANCH PAGE ══ -->
+        <div class="branch-page" id="branchPage">
+            <div class="branch-header">
+                <h1 class="branch-title" id="branchTitle"></h1>
+            </div>
+
+            <!-- Loader reused inside branch page too -->
+            <div class="loader-container" id="branchLoader">
+                <div class="ellipsis-loader">
+                    <div></div><div></div><div></div>
+                </div>
+                <div class="loading-text">Loading . . .</div>
+            </div>
+
+            <div class="branch-grid" id="branchGrid">
+                <div class="branch-card" id="branch-0" onclick="selectBranch(0)">
+                    <img src="" alt="" class="branch-icon">
+                    <div class="branch-label"></div>
+                </div>
+                <div class="branch-card" id="branch-1" onclick="selectBranch(1)">
+                    <img src="" alt="" class="branch-icon">
+                    <div class="branch-label"></div>
+                </div>
+                <div class="branch-card" id="branch-2" onclick="selectBranch(2)">
+                    <img src="" alt="" class="branch-icon">
+                    <div class="branch-label"></div>
+                </div>
+                <div class="branch-card" id="branch-3" onclick="selectBranch(3)">
+                    <img src="" alt="" class="branch-icon">
+                    <div class="branch-label"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ══ DETAIL / ANSWER PAGE ══ -->
+        <div class="detail-page" id="detailPage">
+            <button class="back-btn" onclick="goBack()">
+                <img src="assets/arrow.png" alt="Back">
+                <span>Kembali</span>
+            </button>
+            <div class="answer-text" id="answerText"></div>
+        </div>
+
+    </div>
+
+    <!-- Click sound effect -->
+    <audio id="clickSound" preload="auto">
+    <source src="sounds/click.MP3" type="audio/mp3">
+    </audio>
+
+    <audio id="backSound" preload="auto">
+        <source src="sounds/back.mp3" type="audio/mp3">
+    </audio>
+
+
+    <script>
+        // ── Sound Effect ───────────────────────────────────────────────────────
+        function playClick() {
+            const sound = document.getElementById('clickSound');
+            sound.currentTime = 0;
+            sound.play().catch(err => console.log('Audio play failed:', err));
+        }
+
+        function playBack() {
+            const sound = document.getElementById('backSound');
+            sound.currentTime = 0;
+            sound.play().catch(err => console.log('Audio play failed:', err));
+        }
+        // ── State ──────────────────────────────────────────────────────────────
+        let usedBranches = JSON.parse(localStorage.getItem('usedBranches')) || {};
+        let currentFruit = null;
+        let currentBranch = null;
+
+        const contentData = {
+            pineapple: [
+                'At tiin',
+                "Al a'la",
+                "Al a'diyat",
+                "Adh Dhuha"
+            ],
+            apple: [
+                'Hadits senyum adalah sedekah',
+                'Hadits larangan marah',
+                'Hadits larangan minum sambil berdiri',
+                'Hadits niat'
+            ],
+            watermelon: [
+                'Doa masuk kamar mandi',
+                'Doa untuk kedua orang tua',
+                'Doa masuk masjid',
+                'Doa bangun tidur',
+                'Doa naik kendaraan'
+            ],
+            orange: [
+                'Bahasa arabnya Apel',
+                'Bahasa arabnya Jeruk',
+                'Bahasa arabnya sapi',
+                'Bahasa arabnya bulan',
+                'Bahasa arabnya Matahari'
+            ]
+        };
+
+        const fruits = {
+            pineapple: { icon: 'assets/qurann.png',  name: 'ayat al-quran' },
+            apple:     { icon: 'assets/scroll.png', name: 'Hadits nabi' },
+            watermelon:{ icon: 'assets/doa.png',    name: 'doa - doa' },
+            orange:    { icon: 'assets/arabic.png', name: 'kosakata bahasa arab' },
+        };
+
+        const branchOptions = {
+            pineapple: [
+                { icon: 'assets/pineapple.png',   label: 'nanas' },
+                { icon: 'assets/apple.png',        label: 'apel' },
+                { icon: 'assets/watermelon.png',   label: 'semangka' },
+                { icon: 'assets/orange.png',       label: 'jeruk' },
+            ],
+            apple: [
+                { icon: 'assets/banana.png',       label: 'pisang' },
+                { icon: 'assets/mango.png',         label: 'mangga' },
+                { icon: 'assets/grapes.png',         label: 'anggur' },
+                { icon: 'assets/strawberry.png',   label: 'strawberry' },
+            ],
+            watermelon: [
+                { icon: 'assets/avocado.png',      label: 'alpukat' },
+                { icon: 'assets/durian.png',        label: 'durian' },
+                { icon: 'assets/kiwi.png',          label: 'kiwi' },
+                { icon: 'assets/pear.png',          label: 'pir' },
+                { icon: 'assets/mangosteen.png',   label: 'manggis' },
+            ],
+            orange: [
+                { icon: 'assets/lychee.png',        label: 'leci' },
+                { icon: 'assets/papaya.png',        label: 'pepaya' },
+                { icon: 'assets/dragonfruit.png', label: 'buah naga' },
+                { icon: 'assets/cherry.png',        label: 'ceri' },
+                { icon: 'assets/Pomegranate.png',  label: 'delima' },
+            ],
+        };
+
+        let assignedCountries = JSON.parse(localStorage.getItem('assignedCountries')) || null;
+
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function showLoader(id)  { document.getElementById(id).classList.add('active'); }
+        function hideLoader(id)  { document.getElementById(id).classList.remove('active'); }
+
+        function triggerPopUp(gridId, duration = 600) {
+            const grid = document.getElementById(gridId);
+            grid.classList.add('pop-up');
+            setTimeout(() => grid.classList.remove('pop-up'), duration);
+        }
+
+        function init() {
+            if (!assignedCountries) {
+                buildAssignedCountries();
+            }
+            Object.keys(usedBranches).forEach(fruit => {});
+            showMain();
+            const grid = document.getElementById('fruitsGrid');
+            grid.classList.add('pop-up');
+            setTimeout(() => grid.classList.remove('pop-up'), 1000);
+        }
+
+        function buildAssignedCountries() {
+            assignedCountries = {};
+            const fruitKeys = Object.keys(fruits);
+            
+            fruitKeys.forEach(fruit => {
+                assignedCountries[fruit] = [];
+                const content = shuffleArray(contentData[fruit]);
+                for (let b = 0; b < content.length; b++) {
+                    assignedCountries[fruit][b] = content[b];
+                }
+            });
+            
+            localStorage.setItem('assignedCountries', JSON.stringify(assignedCountries));
+        }
+
+        function showMain() {
+            document.getElementById('mainPage').classList.remove('hidden');
+            document.getElementById('branchPage').classList.remove('active');
+            document.getElementById('detailPage').classList.remove('active');
+        }
+
+        function hideMain() {
+            document.getElementById('mainPage').classList.add('hidden');
+        }
+
+        function showBranch() {
+            document.getElementById('branchPage').classList.add('active');
+            document.getElementById('detailPage').classList.remove('active');
+        }
+
+        function hideBranch() {
+            document.getElementById('branchPage').classList.remove('active');
+        }
+
+        function showDetail() {
+            document.getElementById('detailPage').classList.add('active');
+            document.getElementById('branchPage').classList.remove('active');
+        }
+
+        function selectFruit(fruitName) {
+            playClick();
+            currentFruit = fruitName;
+            document.getElementById('fruitsGrid').classList.add('hidden');
+            showLoader('loader');
+            setTimeout(() => {
+                hideLoader('loader');
+                document.getElementById('fruitsGrid').classList.remove('hidden');
+                hideMain();
+                openBranchPage(fruitName);
+            }, 1000);
+        }
+
+        function openBranchPage(fruitName) {
+            document.getElementById('branchTitle').textContent = fruits[fruitName].name;
+            const branchGrid = document.getElementById('branchGrid');
+            branchGrid.classList.remove('hidden');
+            hideLoader('branchLoader');
+            const options = branchOptions[fruitName];
+            const numOptions = options.length;
+            const existingCards = branchGrid.querySelectorAll('.branch-card');
+            existingCards.forEach((card, idx) => {
+                if (idx >= numOptions) card.remove();
+            });
+            for (let i = existingCards.length; i < numOptions; i++) {
+                const newCard = document.createElement('div');
+                newCard.className = 'branch-card';
+                newCard.id = `branch-${i}`;
+                newCard.onclick = () => selectBranch(i);
+                newCard.innerHTML = `<img src="" alt="" class="branch-icon"><div class="branch-label"></div>`;
+                branchGrid.appendChild(newCard);
+            }
+            const used = usedBranches[fruitName] || [];
+            for (let i = 0; i < numOptions; i++) {
+                const card    = document.getElementById(`branch-${i}`);
+                const iconImg = card.querySelector('.branch-icon');
+                const label   = card.querySelector('.branch-label');
+                iconImg.src = options[i].icon;
+                iconImg.alt = options[i].label;
+                label.textContent = options[i].label;
+                card.classList.remove('disabled');
+                iconImg.style.display = 'block';
+                const existingCross = card.querySelector('.cross-icon');
+                if (existingCross) existingCross.remove();
+                card.onclick = () => selectBranch(i);
+                if (used.includes(i)) disableBranchCard(i);
+            }
+            showBranch();
+            triggerPopUp('branchGrid', 600);
+        }
+
+        function disableBranchCard(index) {
+            const card = document.getElementById(`branch-${index}`);
+            card.classList.add('disabled');
+            card.onclick = null;
+            const iconImg = card.querySelector('.branch-icon');
+            iconImg.style.display = 'none';
+            if (!card.querySelector('.cross-icon')) {
+                const crossImg = document.createElement('img');
+                crossImg.className = 'cross-icon';
+                crossImg.src = 'assets/cross.png';
+                crossImg.alt = 'Cross';
+                crossImg.style.cssText = 'width:180px;height:180px;display:block;margin:0 auto 20px;object-fit:contain;';
+                iconImg.parentNode.insertBefore(crossImg, iconImg);
+            }
+        }
+
+        function selectBranch(index) {
+            const used = usedBranches[currentFruit] || [];
+            if (used.includes(index)) return;
+            playClick();
+            currentBranch = index;
+            document.getElementById('branchGrid').classList.add('hidden');
+            showLoader('branchLoader');
+            setTimeout(() => {
+                hideLoader('branchLoader');
+                if (!usedBranches[currentFruit]) usedBranches[currentFruit] = [];
+                usedBranches[currentFruit].push(index);
+                localStorage.setItem('usedBranches', JSON.stringify(usedBranches));
+                const country = assignedCountries[currentFruit][index];
+                document.getElementById('answerText').textContent = country;
+                hideBranch();
+                showDetail();
+            }, 1000);
+        }
+
+        function goBack() {
+            playBack();
+            document.getElementById('detailPage').classList.remove('active');
+            if (currentFruit !== null && currentBranch !== null) {
+                disableBranchCard(currentBranch);
+            }
+            showMain();
+            document.getElementById('fruitsGrid').classList.add('hidden');
+            showLoader('loader');
+            setTimeout(() => {
+                hideLoader('loader');
+                const fruitsGrid = document.getElementById('fruitsGrid');
+                fruitsGrid.classList.remove('hidden');
+                triggerPopUp('fruitsGrid', 600);
+            }, 1000);
+        }
+
+        function resetAll() {
+            const resetBtn = document.getElementById('resetBtn');
+            resetBtn.classList.add('loading');
+            resetBtn.disabled = true;
+            setTimeout(() => {
+                usedBranches = {};
+                localStorage.removeItem('usedBranches');
+                currentFruit = null;
+                currentBranch = null;
+                buildAssignedCountries();
+                hideBranch();
+                document.getElementById('detailPage').classList.remove('active');
+                showMain();
+                const fruitsGrid = document.getElementById('fruitsGrid');
+                fruitsGrid.classList.remove('hidden');
+                hideLoader('loader');
+                triggerPopUp('fruitsGrid', 1000);
+                resetBtn.classList.remove('loading');
+                resetBtn.disabled = false;
+            }, 800);
+        }
+
+        init();
+    </script>
+</body>
+</html>
