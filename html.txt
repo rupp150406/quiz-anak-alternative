@@ -604,7 +604,7 @@
     </audio>
 
     <audio id="backSound" preload="auto">
-        <source src="sounds/back.MP3" type="audio/mp3">
+        <source src="sounds/back.mp3" type="audio/mp3">
     </audio>
 <!-- 
     <audio id="hoverSound" preload="auto">
