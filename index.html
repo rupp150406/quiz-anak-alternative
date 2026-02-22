@@ -6,8 +6,8 @@
     <meta property="og:title" content="Quiz Surat">
     <meta property="og:description" content="Quiz Surat untuk program ahsantv bersama abu sahla cuma bisa dibuka buat browser PC kalo buka dihp beda tampilan">
     <meta property="og:image" content="https://quiz-anak-alternative.vercel.app/assets/preview.jpg">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/qurann.png>
-
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/qurann.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/ahsan.png">
     <title>Quiz Surat</title>
     <style>
         @font-face {
@@ -523,7 +523,6 @@
                 <h1>Pilih salah satu</h1>
             </div>
 
-            <!-- Loader shown between transitions -->
             <div class="loader-container" id="loader">
                 <div class="ellipsis-loader">
                     <div></div><div></div><div></div>
@@ -561,7 +560,6 @@
                 <h1 class="branch-title" id="branchTitle"></h1>
             </div>
 
-            <!-- Loader reused inside branch page too -->
             <div class="loader-container" id="branchLoader">
                 <div class="ellipsis-loader">
                     <div></div><div></div><div></div>
@@ -600,18 +598,23 @@
 
     </div>
 
-    <!-- Click sound effect -->
+    <!-- Sound effects -->
     <audio id="clickSound" preload="auto">
-    <source src="sounds/click.MP3" type="audio/mp3">
+        <source src="sounds/click.MP3" type="audio/mp3">
     </audio>
 
     <audio id="backSound" preload="auto">
         <source src="sounds/back.mp3" type="audio/mp3">
     </audio>
-
+<!-- 
+    <audio id="hoverSound" preload="auto">
+        <source src="sounds/paperslide.MP3" type="audio/mp3">
+    </audio> -->
 
     <script>
         // ── Sound Effect ───────────────────────────────────────────────────────
+        let audioEnabled = false;
+
         function playClick() {
             const sound = document.getElementById('clickSound');
             sound.currentTime = 0;
@@ -623,6 +626,34 @@
             sound.currentTime = 0;
             sound.play().catch(err => console.log('Audio play failed:', err));
         }
+
+        function playHover() {
+            if (!audioEnabled) return;
+            const sound = document.getElementById('hoverSound');
+            sound.currentTime = 0;
+            sound.volume = 0.4;
+            sound.play().catch(err => console.log('Audio play failed:', err));
+        }
+
+        function enableAudio() {
+            if (!audioEnabled) {
+                audioEnabled = true;
+                const sounds = [
+                    document.getElementById('clickSound'),
+                    document.getElementById('backSound'),
+                    document.getElementById('hoverSound')
+                ];
+                sounds.forEach(sound => {
+                    sound.volume = 0;
+                    sound.play().then(() => {
+                        sound.pause();
+                        sound.currentTime = 0;
+                        sound.volume = sound.id === 'hoverSound' ? 0.4 : 1;
+                    }).catch(() => {});
+                });
+            }
+        }
+
         // ── State ──────────────────────────────────────────────────────────────
         let usedBranches = JSON.parse(localStorage.getItem('usedBranches')) || {};
         let currentFruit = null;
@@ -713,6 +744,15 @@
             setTimeout(() => grid.classList.remove('pop-up'), duration);
         }
 
+        function attachHoverListeners() {
+            document.querySelectorAll('.fruit-card:not(.disabled)').forEach(card => {
+                card.addEventListener('mouseenter', playHover);
+            });
+            document.querySelectorAll('.branch-card:not(.disabled)').forEach(card => {
+                card.addEventListener('mouseenter', playHover);
+            });
+        }
+
         function init() {
             if (!assignedCountries) {
                 buildAssignedCountries();
@@ -721,7 +761,10 @@
             showMain();
             const grid = document.getElementById('fruitsGrid');
             grid.classList.add('pop-up');
-            setTimeout(() => grid.classList.remove('pop-up'), 1000);
+            setTimeout(() => {
+                grid.classList.remove('pop-up');
+                attachHoverListeners();
+            }, 1000);
         }
 
         function buildAssignedCountries() {
@@ -812,6 +855,7 @@
             }
             showBranch();
             triggerPopUp('branchGrid', 600);
+            setTimeout(() => attachHoverListeners(), 650);
         }
 
         function disableBranchCard(index) {
@@ -863,10 +907,12 @@
                 const fruitsGrid = document.getElementById('fruitsGrid');
                 fruitsGrid.classList.remove('hidden');
                 triggerPopUp('fruitsGrid', 600);
+                setTimeout(() => attachHoverListeners(), 650);
             }, 1000);
         }
 
         function resetAll() {
+            enableAudio(); // Enable audio on first click
             const resetBtn = document.getElementById('resetBtn');
             resetBtn.classList.add('loading');
             resetBtn.disabled = true;
@@ -885,6 +931,7 @@
                 triggerPopUp('fruitsGrid', 1000);
                 resetBtn.classList.remove('loading');
                 resetBtn.disabled = false;
+                setTimeout(() => attachHoverListeners(), 1050);
             }, 800);
         }
 
