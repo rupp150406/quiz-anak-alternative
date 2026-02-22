@@ -29,7 +29,7 @@
             display: flex;
             justify-content: center;
             align-items: flex-start;
-            background-image: url('assets/backgrounddd.jpg');
+            background-image: url('assets/banner.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -51,10 +51,7 @@
         }
 
         .reset-btn {
-            position: absolute;
-            top: 0;
-            left: 40px;
-            background: #1185A5;
+            background: #6E7E67;
             color: white;
             border: none;
             padding: 20px 40px;
@@ -66,15 +63,16 @@
             align-items: center;
             gap: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(17, 133, 165, 0.4);
+            box-shadow: 0 4px 15px rgba(110, 126, 103, 0.4);
             -webkit-tap-highlight-color: transparent;
             user-select: none;
+            margin: 40px auto 0;
         }
 
         .reset-btn:hover {
-            background: #0f7490;
+            background: #5d6c57;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(17, 133, 165, 0.5);
+            box-shadow: 0 6px 20px rgba(110, 126, 103, 0.5);
         }
 
         .reset-btn:active {
@@ -136,7 +134,7 @@
             text-align: center;
             font-size: 64px;
             font-weight: 600;
-            background: linear-gradient(135deg, #0C5065 0%, #1DB1E2 100%);
+            background: linear-gradient(135deg, #6E7E67 0%, #3F433D 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -158,33 +156,22 @@
         }
 
         .fruit-card {
-            background: linear-gradient(135deg, #1185A5 0%, #0C5065 100%);
+            background: linear-gradient(135deg, #6E7E67 0%, #3F433D 100%);
             border-radius: 25px;
             padding: 50px 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+            box-shadow: 0 8px 25px rgba(110, 126, 103, 0.3);
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             position: relative;
             overflow: hidden;
         }
 
-        .fruit-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .fruit-card:hover:not(.disabled)::before { opacity: 1; }
-
         .fruit-card:hover:not(.disabled) {
             transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(17, 133, 165, 0.4);
+            box-shadow: 0 12px 35px rgba(110, 126, 103, 0.4);
         }
 
         .fruit-card:active:not(.disabled) { transform: translateY(-4px); }
@@ -196,7 +183,7 @@
 
         .fruit-card.disabled:hover {
             transform: none;
-            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+            box-shadow: 0 8px 25px rgba(110, 126, 103, 0.3);
         }
 
         @keyframes popUp {
@@ -260,9 +247,9 @@
             animation: ellipsisAnimation 1.2s infinite ease-in-out;
         }
 
-        .ellipsis-loader div:nth-child(1) { background: #0C7694; animation-delay: 0s; }
-        .ellipsis-loader div:nth-child(2) { background: #0D6782; animation-delay: 0.2s; }
-        .ellipsis-loader div:nth-child(3) { background: #053D4E; animation-delay: 0.4s; }
+        .ellipsis-loader div:nth-child(1) { background: #6E7E67; animation-delay: 0s; }
+        .ellipsis-loader div:nth-child(2) { background: #5d6c57; animation-delay: 0.2s; }
+        .ellipsis-loader div:nth-child(3) { background: #3F433D; animation-delay: 0.4s; }
 
         @keyframes ellipsisAnimation {
             0%, 80%, 100% { transform: scale(0.8); opacity: 0.5; }
@@ -286,7 +273,7 @@
 
         .loading-text {
             font-size: 36px;
-            color: #10617C;
+            color: #6E7E67;
             font-weight: 600;
         }
 
@@ -308,7 +295,7 @@
             text-align: center;
             font-size: 52px;
             font-weight: 600;
-            background: linear-gradient(135deg, #0C5065 0%, #1DB1E2 100%);
+            background: linear-gradient(135deg, #6E7E67 0%, #3F433D 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -334,33 +321,22 @@
         }
 
         .branch-card {
-            background: linear-gradient(135deg, #1185A5 0%, #0C5065 100%);
+            background: linear-gradient(135deg, #6E7E67 0%, #3F433D 100%);
             border-radius: 25px;
             padding: 50px 30px;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+            box-shadow: 0 8px 25px rgba(110, 126, 103, 0.3);
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             position: relative;
             overflow: hidden;
         }
 
-        .branch-card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 100%);
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .branch-card:hover:not(.disabled)::before { opacity: 1; }
-
         .branch-card:hover:not(.disabled) {
             transform: translateY(-8px);
-            box-shadow: 0 12px 35px rgba(17, 133, 165, 0.4);
+            box-shadow: 0 12px 35px rgba(110, 126, 103, 0.4);
         }
 
         .branch-card:active:not(.disabled) { transform: translateY(-4px); }
@@ -372,7 +348,7 @@
 
         .branch-card.disabled:hover {
             transform: none;
-            box-shadow: 0 8px 25px rgba(17, 133, 165, 0.3);
+            box-shadow: 0 8px 25px rgba(110, 126, 103, 0.3);
         }
 
         .branch-card:nth-child(1) { animation-delay: 0s; }
@@ -404,7 +380,7 @@
         .detail-page.active { display: block; }
 
         .back-btn {
-            background: #1185A5;
+            background: #6E7E67;
             color: white;
             border: none;
             padding: 22px 50px;
@@ -416,16 +392,16 @@
             align-items: center;
             gap: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(17, 133, 165, 0.4);
+            box-shadow: 0 4px 15px rgba(110, 126, 103, 0.4);
             -webkit-tap-highlight-color: transparent;
             user-select: none;
             margin-bottom: 60px;
         }
 
         .back-btn:hover {
-            background: #0f7490;
+            background: #5d6c57;
             transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(17, 133, 165, 0.5);
+            box-shadow: 0 6px 20px rgba(110, 126, 103, 0.5);
         }
 
         .back-btn:active { transform: translateY(0); }
@@ -437,7 +413,7 @@
 
         .answer-text {
             font-size: 90px;
-            color: #10617C;
+            color: #6E7E67;
             font-weight: 600;
             margin-top: 80px;
             line-height: 1.3;
@@ -513,13 +489,6 @@
         <!-- ══ MAIN PAGE ══ -->
         <div class="main-page" id="mainPage">
             <div class="header">
-                <button class="reset-btn" id="resetBtn" onclick="resetAll()">
-                    <img src="assets/refresh.png" alt="Reset" id="resetIcon">
-                    <div class="btn-ellipsis-loader">
-                        <div></div><div></div><div></div><div></div>
-                    </div>
-                    <span>Reset</span>
-                </button>
                 <h1>Pilih salah satu</h1>
             </div>
 
@@ -552,6 +521,14 @@
                     <div class="country-name" id="orange-country"></div>
                 </div>
             </div>
+
+            <button class="reset-btn" id="resetBtn" onclick="resetAll()">
+                <img src="assets/refresh.png" alt="Reset" id="resetIcon">
+                <div class="btn-ellipsis-loader">
+                    <div></div><div></div><div></div><div></div>
+                </div>
+                <span>Reset</span>
+            </button>
         </div>
 
         <!-- ══ BRANCH PAGE ══ -->
@@ -604,12 +581,8 @@
     </audio>
 
     <audio id="backSound" preload="auto">
-        <source src="sounds/back.mp3" type="audio/mp3">
+        <source src="sounds/back.MP3" type="audio/mp3">
     </audio>
-<!-- 
-    <audio id="hoverSound" preload="auto">
-        <source src="sounds/paperslide.MP3" type="audio/mp3">
-    </audio> -->
 
     <script>
         // ── Sound Effect ───────────────────────────────────────────────────────
@@ -627,28 +600,19 @@
             sound.play().catch(err => console.log('Audio play failed:', err));
         }
 
-        function playHover() {
-            if (!audioEnabled) return;
-            const sound = document.getElementById('hoverSound');
-            sound.currentTime = 0;
-            sound.volume = 0.4;
-            sound.play().catch(err => console.log('Audio play failed:', err));
-        }
-
         function enableAudio() {
             if (!audioEnabled) {
                 audioEnabled = true;
                 const sounds = [
                     document.getElementById('clickSound'),
-                    document.getElementById('backSound'),
-                    document.getElementById('hoverSound')
+                    document.getElementById('backSound')
                 ];
                 sounds.forEach(sound => {
                     sound.volume = 0;
                     sound.play().then(() => {
                         sound.pause();
                         sound.currentTime = 0;
-                        sound.volume = sound.id === 'hoverSound' ? 0.4 : 1;
+                        sound.volume = 1;
                     }).catch(() => {});
                 });
             }
@@ -744,15 +708,6 @@
             setTimeout(() => grid.classList.remove('pop-up'), duration);
         }
 
-        function attachHoverListeners() {
-            document.querySelectorAll('.fruit-card:not(.disabled)').forEach(card => {
-                card.addEventListener('mouseenter', playHover);
-            });
-            document.querySelectorAll('.branch-card:not(.disabled)').forEach(card => {
-                card.addEventListener('mouseenter', playHover);
-            });
-        }
-
         function init() {
             if (!assignedCountries) {
                 buildAssignedCountries();
@@ -761,10 +716,7 @@
             showMain();
             const grid = document.getElementById('fruitsGrid');
             grid.classList.add('pop-up');
-            setTimeout(() => {
-                grid.classList.remove('pop-up');
-                attachHoverListeners();
-            }, 1000);
+            setTimeout(() => grid.classList.remove('pop-up'), 1000);
         }
 
         function buildAssignedCountries() {
@@ -855,7 +807,6 @@
             }
             showBranch();
             triggerPopUp('branchGrid', 600);
-            setTimeout(() => attachHoverListeners(), 650);
         }
 
         function disableBranchCard(index) {
@@ -907,12 +858,11 @@
                 const fruitsGrid = document.getElementById('fruitsGrid');
                 fruitsGrid.classList.remove('hidden');
                 triggerPopUp('fruitsGrid', 600);
-                setTimeout(() => attachHoverListeners(), 650);
             }, 1000);
         }
 
         function resetAll() {
-            enableAudio(); // Enable audio on first click
+            enableAudio();
             const resetBtn = document.getElementById('resetBtn');
             resetBtn.classList.add('loading');
             resetBtn.disabled = true;
@@ -931,7 +881,6 @@
                 triggerPopUp('fruitsGrid', 1000);
                 resetBtn.classList.remove('loading');
                 resetBtn.disabled = false;
-                setTimeout(() => attachHoverListeners(), 1050);
             }, 800);
         }
 
