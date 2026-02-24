@@ -34,32 +34,32 @@
             background-position: center;
             background-repeat: no-repeat;
             background-attachment: fixed;
-            padding: 40px 20px; /* Ditambah padding atas bawah */
+            padding: 20px;
+            overflow-x: hidden;
         }
 
         .container {
             width: 100%;
             max-width: 1600px; 
-            min-height: 85vh; /* Menentukan tinggi minimal kontainer */
+            height: 90vh; /* Mengunci tinggi agar posisi tombol konsisten */
             position: relative;
             display: flex;
             flex-direction: column;
-            justify-content: center;
             align-items: center;
         }
 
-        /* Halaman Utama & Cabang */
         .main-page, .branch-page, .detail-page {
             width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
-            min-height: 85vh; /* Memastikan tiap halaman punya tinggi yang cukup */
+            position: relative;
         }
 
-        .main-page.hidden, .branch-page.hidden, .detail-page.hidden { display: none; }
+        .hidden { display: none !important; }
 
-        /* Tombol di Ujung Bawah Layar */
+        /* ── Tombol Fix di Ujung Bawah ── */
         .reset-btn, .back-btn {
             background: #6E7E67;
             color: white;
@@ -75,15 +75,19 @@
             transition: all 0.3s ease;
             box-shadow: 0 10px 25px rgba(110, 126, 103, 0.4);
             user-select: none;
-            margin-top: auto; /* Mendorong tombol ke paling bawah */
-            margin-bottom: 20px;
+            
+            /* Kunci di posisi bawah tanpa mendorong elemen lain */
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            white-space: nowrap;
+            z-index: 10;
         }
-
-        .reset-btn.hidden { display: none; }
 
         .reset-btn:hover, .back-btn:hover {
             background: #5d6c57;
-            transform: translateY(-5px);
+            transform: translateX(-50%) translateY(-5px);
             box-shadow: 0 15px 35px rgba(110, 126, 103, 0.5);
         }
 
@@ -92,20 +96,19 @@
             height: 50px;
         }
 
-        /* Grid - Diturunkan sedikit */
+        /* ── Grid Layout ── */
         .fruits-grid, .branch-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 40px;
             width: 100%;
-            margin-top: 80px; /* Menurunkan grid dari atas */
+            margin-top: 100px; /* Menurunkan grid sedikit saja sesuai permintaan */
+            padding-bottom: 150px; /* Memberi ruang agar tidak tertutup tombol */
         }
 
         .branch-grid:has(.branch-card:nth-child(5)) {
             grid-template-columns: repeat(5, 1fr);
         }
-
-        .fruits-grid.hidden, .branch-grid.hidden { display: none; }
 
         .fruit-card, .branch-card {
             background: linear-gradient(135deg, #6E7E67 0%, #3F433D 100%);
@@ -147,11 +150,16 @@
             text-transform: capitalize;
         }
 
+        /* ── Loader ── */
         .loader-container {
             display: none;
             text-align: center;
-            padding: 100px 0;
-            margin-top: 50px;
+            /* Posisikan persis di tengah layar tanpa terdorong tombol */
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100%;
         }
 
         .loader-container.active { display: block; }
@@ -181,17 +189,21 @@
             font-weight: 600;
         }
 
+        /* ── Detail Page ── */
         .answer-text {
             font-size: 110px;
             color: #3F433D;
             font-weight: 600;
             line-height: 1.2;
-            margin-top: 100px; /* Jarak atas untuk teks jawaban */
-            margin-bottom: 50px;
-            padding: 0 20px;
-            flex-grow: 1; /* Agar teks mengisi ruang dan mendorong tombol ke bawah */
+            text-align: center;
+            padding: 0 40px;
+            /* Pusatkan di tengah vertical antara atas layar dan area tombol */
+            margin-top: auto;
+            margin-bottom: auto;
+            height: calc(100% - 150px);
             display: flex;
             align-items: center;
+            justify-content: center;
         }
 
         /* ── Responsive Tablet/Laptop ── */
@@ -199,20 +211,27 @@
             .fruit-icon, .branch-icon { width: 150px; height: 150px; }
             .fruit-name, .branch-label { font-size: 32px; }
             .answer-text { font-size: 80px; }
-            .fruits-grid, .branch-grid { gap: 20px; margin-top: 50px; }
+            .fruits-grid, .branch-grid { gap: 20px; margin-top: 60px; }
+            .reset-btn, .back-btn { font-size: 28px; padding: 20px 45px; }
         }
 
         /* ── Responsive Mobile ── */
         @media (max-width: 768px) {
-            body { align-items: flex-start; padding-top: 20px; }
-            .container { min-height: 90vh; }
-            .fruits-grid, .branch-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 30px; }
-            .fruit-card, .branch-card { padding: 30px 15px; border-radius: 20px; }
+            body { align-items: center; }
+            .container { height: 95vh; }
+            .fruits-grid, .branch-grid { 
+                grid-template-columns: repeat(2, 1fr); 
+                gap: 15px; 
+                margin-top: 40px;
+                padding-bottom: 100px;
+            }
+            .fruit-card, .branch-card { padding: 25px 15px; border-radius: 20px; }
             .fruit-icon, .branch-icon, .cross-icon { width: 100px; height: 100px; }
             .fruit-name, .branch-label { font-size: 20px; }
-            .answer-text { font-size: 42px; margin-top: 50px; }
-            .reset-btn, .back-btn { padding: 15px 30px; font-size: 20px; margin-top: 30px; }
-            .reset-btn img, .back-btn img { width: 30px; height: 30px; }
+            .answer-text { font-size: 42px; }
+            .reset-btn, .back-btn { padding: 12px 30px; font-size: 20px; bottom: 10px; }
+            .reset-btn img, .back-btn img { width: 25px; height: 25px; }
+            .loading-text { font-size: 24px; }
         }
 
         @keyframes popUp {
@@ -416,14 +435,12 @@
                 document.getElementById('branchLoader').classList.remove('active');
                 document.getElementById('branchPage').classList.add('hidden');
                 document.getElementById('detailPage').classList.remove('hidden');
-                document.getElementById('detailPage').classList.add('active');
             }, 800);
         }
 
         function goBack() {
             playBack();
             document.getElementById('detailPage').classList.add('hidden');
-            document.getElementById('detailPage').classList.remove('active');
             document.getElementById('branchPage').classList.add('hidden');
             document.getElementById('mainPage').classList.remove('hidden');
             document.getElementById('fruitsGrid').classList.remove('hidden');
