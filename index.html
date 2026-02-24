@@ -33,7 +33,7 @@
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            overflow: hidden; /* Mencegah scroll yang tidak perlu di TV */
+            overflow: hidden;
         }
 
         .container {
@@ -41,29 +41,28 @@
             max-width: 1600px;
             height: 100%;
             display: grid;
-            /* Membagi layar menjadi 3 baris: Atas (15%), Tengah (Sisa), Bawah (20%) */
-            grid-template-rows: 15% 1fr 20%; 
+            grid-template-rows: 12% 1fr 20%; 
             padding: 0 40px;
         }
 
-        /* ── Wrapper Halaman ── */
         .page-wrapper {
-            grid-row: 2; /* Selalu berada di baris tengah */
+            grid-row: 2;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             width: 100%;
+            position: relative;
         }
 
         .hidden { display: none !important; }
 
-        /* ── Tombol di Baris Bawah (Row 3) ── */
+        /* ── Tombol Bawah ── */
         .footer-nav {
             grid-row: 3;
             display: flex;
             justify-content: center;
-            align-items: center; /* Menjaga tombol di ujung bawah baris ke-3 */
+            align-items: center;
             padding-bottom: 40px;
         }
 
@@ -74,7 +73,7 @@
             padding: 25px 65px;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 38px; /* Diperbesar sesuai kritik rekan */
+            font-size: 38px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -89,21 +88,15 @@
             transform: translateY(-8px);
         }
 
-        .reset-btn img, .back-btn img {
-            width: 55px;
-            height: 55px;
-        }
+        .reset-btn img, .back-btn img { width: 55px; height: 55px; }
 
-        /* ── Konten Grid (Row 2) ── */
+        /* ── Solusi Grid Merapat ke Tengah ── */
         .fruits-grid, .branch-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
+            display: flex; /* Menggunakan flexbox untuk grid agar gampang dirapatkan ke tengah */
+            flex-wrap: wrap;
+            justify-content: center; /* Ini kunci agar kartu selalu di tengah */
             gap: 40px;
             width: 100%;
-        }
-
-        .branch-grid:has(.branch-card:nth-child(5)) {
-            grid-template-columns: repeat(5, 1fr);
         }
 
         .fruit-card, .branch-card {
@@ -118,24 +111,40 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            width: calc(25% - 40px); /* Standar 4 kolom */
+            min-width: 280px;
+        }
+
+        /* Jika 5 item (Doa & Arab), lebar disesuaikan agar tetap sejajar */
+        .branch-grid .branch-card {
+            width: calc(20% - 40px); 
+            min-width: 250px;
+        }
+
+        .fruit-card.disabled, .branch-card.disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
         }
 
         .fruit-icon, .branch-icon, .cross-icon {
-            width: 230px; /* Ukuran maksimal untuk TV */
-            height: 230px;
+            width: 200px;
+            height: 200px;
             margin-bottom: 30px;
             object-fit: contain;
         }
 
         .fruit-name, .branch-label {
-            font-size: 46px;
+            font-size: 42px;
             color: white;
             line-height: 1.2;
+            font-weight: 600;
         }
 
-        /* ── Loader & Answer (Selalu Tengah) ── */
+        /* ── Loader ── */
         .loader-container {
             text-align: center;
+            width: 100%;
         }
 
         .ellipsis-loader {
@@ -146,8 +155,7 @@
         }
 
         .ellipsis-loader div {
-            width: 40px;
-            height: 40px;
+            width: 40px; height: 40px;
             border-radius: 50%;
             background: #6E7E67;
             animation: bounce 1.2s infinite ease-in-out;
@@ -161,7 +169,7 @@
         .loading-text { font-size: 50px; color: #6E7E67; font-weight: 600; }
 
         .answer-text {
-            font-size: 120px; /* Sangat besar untuk Monitor/TV */
+            font-size: 110px;
             color: #3F433D;
             font-weight: 600;
             text-align: center;
@@ -169,52 +177,36 @@
             padding: 0 20px;
         }
 
-        /* ── Responsive Tablet/Laptop ── */
-        @media (max-width: 1366px) {
-            .container { grid-template-rows: 10% 1fr 15%; }
-            .fruit-icon, .branch-icon { width: 160px; height: 160px; }
-            .fruit-name, .branch-label { font-size: 32px; }
-            .answer-text { font-size: 85px; }
-            .reset-btn, .back-btn { font-size: 28px; padding: 18px 40px; }
-        }
-
         /* ── Responsive Mobile ── */
         @media (max-width: 768px) {
             body { overflow-y: auto; }
-            .container { 
-                grid-template-rows: auto 1fr auto; 
-                height: auto; 
-                min-height: 100vh;
-                padding: 20px;
-            }
-            .page-wrapper { margin: 40px 0; }
-            .fruits-grid, .branch-grid { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-            .fruit-card, .branch-card { padding: 30px 10px; border-radius: 20px; }
+            .container { grid-template-rows: auto 1fr auto; height: auto; padding: 20px; }
+            .page-wrapper { margin: 30px 0; }
+            .fruit-card, .branch-card { width: calc(50% - 20px) !important; min-width: 140px; padding: 30px 10px; border-radius: 20px; }
             .fruit-icon, .branch-icon { width: 100px; height: 100px; }
             .fruit-name, .branch-label { font-size: 20px; }
             .answer-text { font-size: 45px; }
             .reset-btn, .back-btn { padding: 15px 30px; font-size: 22px; }
-            .footer-nav { padding-bottom: 20px; }
+            .reset-btn img, .back-btn img { width: 30px; height: 30px; }
         }
 
         @keyframes popUp {
-            0%   { opacity: 0; transform: scale(0.85); }
+            0%   { opacity: 0; transform: scale(0.9); }
             100% { opacity: 1; transform: scale(1); }
         }
-        .pop-up { animation: popUp 0.5s ease-out forwards; }
+        .pop-up { animation: popUp 0.4s ease-out forwards; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div></div>
-
-        <div class="page-wrapper" id="pageContent">
+        <div></div> <div class="page-wrapper" id="pageContent">
             
+            <div class="loader-container hidden" id="globalLoader">
+                <div class="ellipsis-loader"><div></div><div></div><div></div></div>
+                <div class="loading-text" id="loaderText">Sedang Memuat...</div>
+            </div>
+
             <div id="mainView" class="width-full">
-                <div class="loader-container hidden" id="mainLoader">
-                    <div class="ellipsis-loader"><div></div><div></div><div></div></div>
-                    <div class="loading-text">Sedang Memuat...</div>
-                </div>
                 <div class="fruits-grid pop-up" id="fruitsGrid">
                     <div class="fruit-card" onclick="selectFruit('pineapple')">
                         <img src="assets/qurann.png" class="fruit-icon">
@@ -236,10 +228,6 @@
             </div>
 
             <div id="branchView" class="hidden width-full">
-                <div class="loader-container hidden" id="branchLoader">
-                    <div class="ellipsis-loader"><div></div><div></div><div></div></div>
-                    <div class="loading-text">Mencari...</div>
-                </div>
                 <div class="branch-grid" id="branchGrid"></div>
             </div>
 
@@ -325,13 +313,18 @@
         function selectFruit(fruitName) {
             playClick(); enableAudio();
             currentFruit = fruitName;
-            document.getElementById('fruitsGrid').classList.add('hidden');
+            
+            // Sembunyikan grid buah & tombol reset
+            document.getElementById('mainView').classList.add('hidden');
             document.getElementById('resetBtn').classList.add('hidden');
-            document.getElementById('mainLoader').classList.remove('hidden');
+            
+            // Tampilkan Loader
+            const loader = document.getElementById('globalLoader');
+            document.getElementById('loaderText').textContent = "Sedang Memuat...";
+            loader.classList.remove('hidden');
             
             setTimeout(() => {
-                document.getElementById('mainLoader').classList.add('hidden');
-                document.getElementById('mainView').classList.add('hidden');
+                loader.classList.add('hidden');
                 openBranchPage(fruitName);
             }, 800);
         }
@@ -353,16 +346,21 @@
                 grid.appendChild(card);
             });
 
+            // Pastikan view branch dan gridnya muncul
             document.getElementById('branchView').classList.remove('hidden');
+            grid.classList.remove('hidden'); // Kunci perbaikan: menampilkan grid kembali
             grid.classList.add('pop-up');
             document.getElementById('backBtn').classList.remove('hidden');
         }
 
         function selectBranch(index) {
             playClick();
-            document.getElementById('branchGrid').classList.add('hidden');
+            document.getElementById('branchView').classList.add('hidden');
             document.getElementById('backBtn').classList.add('hidden');
-            document.getElementById('branchLoader').classList.remove('hidden');
+            
+            const loader = document.getElementById('globalLoader');
+            document.getElementById('loaderText').textContent = "Mencari...";
+            loader.classList.remove('hidden');
 
             setTimeout(() => {
                 if (!usedBranches[currentFruit]) usedBranches[currentFruit] = [];
@@ -370,8 +368,7 @@
                 localStorage.setItem('usedBranches', JSON.stringify(usedBranches));
                 
                 document.getElementById('answerText').textContent = assignedCountries[currentFruit][index];
-                document.getElementById('branchLoader').classList.add('hidden');
-                document.getElementById('branchView').classList.add('hidden');
+                loader.classList.add('hidden');
                 document.getElementById('detailView').classList.remove('hidden');
                 document.getElementById('backBtn').classList.remove('hidden');
             }, 800);
@@ -379,12 +376,18 @@
 
         function goBack() {
             playBack();
+            // Sembunyikan semua view detail/branch
             document.getElementById('detailView').classList.add('hidden');
             document.getElementById('branchView').classList.add('hidden');
             document.getElementById('backBtn').classList.add('hidden');
+            
+            // Kembalikan ke tampilan utama
             document.getElementById('mainView').classList.remove('hidden');
             document.getElementById('fruitsGrid').classList.remove('hidden');
             document.getElementById('resetBtn').classList.remove('hidden');
+            
+            // Pastikan loader global tertutup
+            document.getElementById('globalLoader').classList.add('hidden');
         }
 
         function resetAll() {
