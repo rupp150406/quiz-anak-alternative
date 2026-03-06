@@ -10,10 +10,19 @@
     <link rel="icon" type="image/png" sizes="32x32" href="assets/ahsan.png">
     <title>Quiz Surat</title>
     <style>
+        /* Font Utama */
         @font-face {
             font-family: 'FredokaCustom';
             src: url('fonts/Fredoka-Medium.ttf') format('truetype');
             font-weight: 500;
+            font-style: normal;
+        }
+
+        /* Font Arab Khusus */
+        @font-face {
+            font-family: 'AmiriCustom';
+            src: url('fonts/Amiri-Regular.ttf') format('truetype');
+            font-weight: normal;
             font-style: normal;
         }
 
@@ -57,7 +66,6 @@
 
         .hidden { display: none !important; }
 
-        /* ── Tombol Bawah ── */
         .footer-nav {
             grid-row: 3;
             display: flex;
@@ -90,11 +98,10 @@
 
         .reset-btn img, .back-btn img { width: 55px; height: 55px; }
 
-        /* ── Solusi Grid Merapat ke Tengah ── */
         .fruits-grid, .branch-grid {
-            display: flex; /* Menggunakan flexbox untuk grid agar gampang dirapatkan ke tengah */
+            display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Ini kunci agar kartu selalu di tengah */
+            justify-content: center;
             gap: 40px;
             width: 100%;
         }
@@ -111,13 +118,12 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: calc(25% - 40px); /* Standar 4 kolom */
+            width: calc(25% - 40px);
             min-width: 280px;
         }
 
-        /* Jika 5 item (Doa & Arab), lebar disesuaikan agar tetap sejajar */
         .branch-grid .branch-card {
-            width: calc(20% - 40px); 
+            width: calc(20% - 40px);
             min-width: 250px;
         }
 
@@ -141,7 +147,6 @@
             font-weight: 600;
         }
 
-        /* ── Loader ── */
         .loader-container {
             text-align: center;
             width: 100%;
@@ -155,7 +160,8 @@
         }
 
         .ellipsis-loader div {
-            width: 40px; height: 40px;
+            width: 40px;
+            height: 40px;
             border-radius: 50%;
             background: #6E7E67;
             animation: bounce 1.2s infinite ease-in-out;
@@ -173,11 +179,15 @@
             color: #3F433D;
             font-weight: 600;
             text-align: center;
-            line-height: 1.1;
+            line-height: 1.4; 
             padding: 0 20px;
         }
 
-        /* ── Responsive Mobile ── */
+        .arabic-font {
+            font-family: 'AmiriCustom', serif;
+            direction: rtl; 
+        }
+
         @media (max-width: 768px) {
             body { overflow-y: auto; }
             .container { grid-template-rows: auto 1fr auto; height: auto; padding: 20px; }
@@ -199,11 +209,11 @@
 </head>
 <body>
     <div class="container">
-        <div></div> <div class="page-wrapper" id="pageContent">
-            
+        <div></div> 
+        <div class="page-wrapper" id="pageContent">
             <div class="loader-container hidden" id="globalLoader">
                 <div class="ellipsis-loader"><div></div><div></div><div></div></div>
-                <div class="loading-text" id="loaderText">Sedang Memuat...</div>
+                <div class="loading-text" id="loaderText"></div>
             </div>
 
             <div id="mainView" class="width-full">
@@ -234,7 +244,6 @@
             <div id="detailView" class="hidden">
                 <div class="answer-text" id="answerText"></div>
             </div>
-
         </div>
 
         <div class="footer-nav">
@@ -258,7 +267,7 @@
         let audioEnabled = false;
 
         const contentData = {
-            pineapple: [" . . . لَقَدْ خَلَقْنَا ٱلْإِنسَـٰنَ فِىٓ أَحْسَنِ تَقْوِيمٍۢ", " . . . إِلَّا مَا شَآءَ ٱللَّهُ ۚ إِنَّهُۥ يَعْلَمُ ٱلْجَهْرَ وَمَا يَخْفَىٰ", " . . . وَإِنَّهُۥ عَلَىٰ ذَٰلِكَ لَشَهِيدٌۭ", " . . . وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰٓ"],
+            pineapple: [" . . . لَقَدْ خَلَقْنَا ٱلْإِنسَـٰنَ fِىٓ أَحْسَنِ تَقْوِيمٍۢ", " . . . إِلَّا مَا شَآءَ ٱللَّهُ ۚ إِنَّهُۥ يَعْلَمُ ٱلْجهرَ وَمَا يَخْفَىٰ", " . . . وَإِنَّهُۥ عَلَىٰ ذَٰلِكَ لَشَهِيدٌۭ", " . . . وَلَسَوْفَ يُعْطِيكَ رَبُّكَ fَتَرْضَىٰٓ"],
             apple: ['Hadits Senyum adalah sedekah', 'Hadits larangan marah', 'Hadits larangan minum sambil berdiri', 'Hadits niat'],
             watermelon: ['Doa keluar masjid', 'Doa setelah hujan reda', 'Doa sesudah makan', 'Doa bangun tidur', 'Doa menggunakan baju'],
             orange: ['Bintang', 'Kursi', 'Ayam', 'Jagung', 'Pepaya']
@@ -314,11 +323,9 @@
             playClick(); enableAudio();
             currentFruit = fruitName;
             
-            // Sembunyikan grid buah & tombol reset
             document.getElementById('mainView').classList.add('hidden');
             document.getElementById('resetBtn').classList.add('hidden');
             
-            // Tampilkan Loader
             const loader = document.getElementById('globalLoader');
             document.getElementById('loaderText').textContent = "Sedang Memuat...";
             loader.classList.remove('hidden');
@@ -333,22 +340,18 @@
             const grid = document.getElementById('branchGrid');
             grid.innerHTML = '';
             const used = usedBranches[fruitName] || [];
-
             branchOptions[fruitName].forEach((opt, i) => {
                 const card = document.createElement('div');
                 card.className = `branch-card ${used.includes(i) ? 'disabled' : ''}`;
                 if (used.includes(i)) {
                     card.innerHTML = `<img src="assets/cross.png" class="cross-icon"><div class="branch-label">${opt.label}</div>`;
                 } else {
-                    card.innerHTML = `<img src="${opt.icon}" class="branch-icon"><div class="branch-label">${opt.label}</div>`;
+                    card.innerHTML = `<img src="${opt.icon}" class=\"branch-icon\"><div class=\"branch-label\">${opt.label}</div>`;
                     card.onclick = () => selectBranch(i);
                 }
                 grid.appendChild(card);
             });
-
-            // Pastikan view branch dan gridnya muncul
             document.getElementById('branchView').classList.remove('hidden');
-            grid.classList.remove('hidden'); // Kunci perbaikan: menampilkan grid kembali
             grid.classList.add('pop-up');
             document.getElementById('backBtn').classList.remove('hidden');
         }
@@ -367,7 +370,15 @@
                 usedBranches[currentFruit].push(index);
                 localStorage.setItem('usedBranches', JSON.stringify(usedBranches));
                 
-                document.getElementById('answerText').textContent = assignedCountries[currentFruit][index];
+                const answerElem = document.getElementById('answerText');
+                answerElem.textContent = assignedCountries[currentFruit][index];
+
+                if (currentFruit === 'pineapple') {
+                    answerElem.classList.add('arabic-font');
+                } else {
+                    answerElem.classList.remove('arabic-font');
+                }
+
                 loader.classList.add('hidden');
                 document.getElementById('detailView').classList.remove('hidden');
                 document.getElementById('backBtn').classList.remove('hidden');
@@ -376,17 +387,11 @@
 
         function goBack() {
             playBack();
-            // Sembunyikan semua view detail/branch
             document.getElementById('detailView').classList.add('hidden');
             document.getElementById('branchView').classList.add('hidden');
             document.getElementById('backBtn').classList.add('hidden');
-            
-            // Kembalikan ke tampilan utama
             document.getElementById('mainView').classList.remove('hidden');
-            document.getElementById('fruitsGrid').classList.remove('hidden');
             document.getElementById('resetBtn').classList.remove('hidden');
-            
-            // Pastikan loader global tertutup
             document.getElementById('globalLoader').classList.add('hidden');
         }
 
