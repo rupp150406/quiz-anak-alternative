@@ -57,13 +57,22 @@
 
         .hidden { display: none !important; }
 
-        /* ── Tombol Bawah ── */
+        /* ── Footer & Tombol Bawah ── */
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            pointer-events: none; /* agar area kosong footer tidak menghalangi klik */
+            z-index: 100;
+        }
+
         .footer-nav {
-            grid-row: 3;
             display: flex;
-            justify-content: center;
+            justify-content: flex-end; /* tombol back tetap di kanan tengah bawah */
             align-items: center;
-            padding-bottom: 40px;
+            padding: 0 40px 40px 40px;
+            pointer-events: none;
         }
 
         .reset-btn, .back-btn {
@@ -73,7 +82,7 @@
             padding: 25px 65px;
             border-radius: 25px;
             cursor: pointer;
-            font-size: 38px;
+            font-size: 27px;
             font-weight: 600;
             display: flex;
             align-items: center;
@@ -82,6 +91,7 @@
             box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
             user-select: none;
             backdrop-filter: blur(6px);
+            pointer-events: all; /* aktifkan klik hanya pada tombol */
         }
 
         .reset-btn:hover, .back-btn:hover {
@@ -91,11 +101,31 @@
 
         .reset-btn img, .back-btn img { width: 55px; height: 55px; }
 
+        /* ── Grup tombol kiri bawah ── */
+        .footer-left {
+            position: fixed;
+            bottom: 40px;
+            left: 40px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            pointer-events: all;
+        }
+
+        /* ── Tombol Reset & Back — ikon saja, kecil ── */
+        .reset-btn, .back-btn {
+            padding: 18px;
+            border-radius: 20px;
+            gap: 0;
+        }
+
+        .reset-btn img, .back-btn img { width: 38px; height: 38px; }
+
         /* ── Solusi Grid Merapat ke Tengah ── */
         .fruits-grid, .branch-grid {
-            display: flex; /* Menggunakan flexbox untuk grid agar gampang dirapatkan ke tengah */
+            display: flex;
             flex-wrap: wrap;
-            justify-content: center; /* Ini kunci agar kartu selalu di tengah */
+            justify-content: center;
             gap: 40px;
             width: 100%;
         }
@@ -113,11 +143,10 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            width: calc(25% - 40px); /* Standar 4 kolom */
+            width: calc(25% - 40px);
             min-width: 280px;
         }
 
-        /* Jika 5 item (Doa & Arab), lebar disesuaikan agar tetap sejajar */
         .branch-grid .branch-card {
             width: calc(20% - 40px); 
             min-width: 250px;
@@ -175,7 +204,7 @@
 
         .answer-text {
             font-size: 110px;
-            color: #0d5c8a;
+            color: #000000;
             font-weight: 600;
             text-align: center;
             line-height: 1.1;
@@ -192,8 +221,16 @@
             .fruit-icon, .branch-icon { width: 100px; height: 100px; }
             .fruit-name, .branch-label { font-size: 20px; }
             .answer-text { font-size: 45px; }
-            .reset-btn, .back-btn { padding: 15px 30px; font-size: 22px; }
-            .reset-btn img, .back-btn img { width: 30px; height: 30px; }
+            .reset-btn {
+                bottom: 20px;
+                left: 20px;
+                padding: 15px 30px;
+                font-size: 22px;
+            }
+            .reset-btn img { width: 30px; height: 30px; }
+            .back-btn { padding: 15px 30px; font-size: 22px; }
+            .back-btn img { width: 30px; height: 30px; }
+            .footer-nav { padding: 0 20px 20px 20px; }
         }
 
         @keyframes popUp {
@@ -205,7 +242,8 @@
 </head>
 <body>
     <div class="container">
-        <div></div> <div class="page-wrapper" id="pageContent">
+        <div></div>
+        <div class="page-wrapper" id="pageContent">
             
             <div class="loader-container hidden" id="globalLoader">
                 <div class="ellipsis-loader"><div></div><div></div><div></div></div>
@@ -242,18 +280,20 @@
             </div>
 
         </div>
+    </div>
 
-        <div class="footer-nav">
+    <!-- Footer dengan tombol Reset & Kembali di kiri bawah -->
+    <footer>
+        <div class="footer-left">
             <button class="reset-btn" id="resetBtn" onclick="resetAll()">
                 <img src="assets/refresh.png">
-                <span>Reset Ulang</span>
             </button>
             <button class="back-btn hidden" id="backBtn" onclick="goBack()">
                 <img src="assets/arrow.png">
                 <span>Kembali</span>
             </button>
         </div>
-    </div>
+    </footer>
 
     <audio id="clickSound" preload="auto"><source src="sounds/click.MP3" type="audio/mp3"></audio>
     <audio id="backSound" preload="auto"><source src="sounds/back.MP3" type="audio/mp3"></audio>
@@ -264,7 +304,7 @@
         let audioEnabled = false;
 
         const contentData = {
-            pineapple: [" . . . لَقَدْ خَلَقْنَا ٱلْإِنسَـٰنَ فِىٓ أَحْسَنِ تَقْوِيمٍۢ", " . . . إِلَّا مَا شَآءَ ٱللَّهُ ۚ إِنَّهُۥ يَعْلَمُ ٱلْجَهْرَ وَمَا يَخْفَىٰ", " . . . وَإِنَّهُۥ عَلَىٰ ذَٰلِكَ لَشَهِيدٌۭ", " . . . وَلَسَوْفَ يُعْطِيكَ رَبُّكَ فَتَرْضَىٰٓ"],
+            pineapple: ["إِنَّ سَعْيَكُمْ لَشَتَّىٰ", "فَأَمَّا مَنْ أَعْطَىٰ وَاتَّقَىٰ", "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ", "فَإِذَا فَرَغْتَ فَانْصَبْ"],
             apple: ['Hadits Senyum adalah sedekah', 'Hadits larangan marah', 'Hadits larangan minum sambil berdiri', 'Hadits niat'],
             watermelon: ['Doa keluar masjid', 'Doa setelah hujan reda', 'Doa sesudah makan', 'Doa bangun tidur', 'Doa menggunakan baju'],
             orange: ['Bintang', 'Kursi', 'Ayam', 'Jagung', 'Pepaya']
@@ -320,11 +360,8 @@
             playClick(); enableAudio();
             currentFruit = fruitName;
             
-            // Sembunyikan grid buah & tombol reset
             document.getElementById('mainView').classList.add('hidden');
-            document.getElementById('resetBtn').classList.add('hidden');
             
-            // Tampilkan Loader
             const loader = document.getElementById('globalLoader');
             document.getElementById('loaderText').textContent = "Sedang Memuat...";
             loader.classList.remove('hidden');
@@ -352,9 +389,8 @@
                 grid.appendChild(card);
             });
 
-            // Pastikan view branch dan gridnya muncul
             document.getElementById('branchView').classList.remove('hidden');
-            grid.classList.remove('hidden'); // Kunci perbaikan: menampilkan grid kembali
+            grid.classList.remove('hidden');
             grid.classList.add('pop-up');
             document.getElementById('backBtn').classList.remove('hidden');
         }
@@ -382,17 +418,13 @@
 
         function goBack() {
             playBack();
-            // Sembunyikan semua view detail/branch
             document.getElementById('detailView').classList.add('hidden');
             document.getElementById('branchView').classList.add('hidden');
             document.getElementById('backBtn').classList.add('hidden');
             
-            // Kembalikan ke tampilan utama
             document.getElementById('mainView').classList.remove('hidden');
             document.getElementById('fruitsGrid').classList.remove('hidden');
-            document.getElementById('resetBtn').classList.remove('hidden');
             
-            // Pastikan loader global tertutup
             document.getElementById('globalLoader').classList.add('hidden');
         }
 
