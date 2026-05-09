@@ -9,237 +9,222 @@
     <meta property="og:image" content="https://ahsan.tv/wp-content/uploads/2026/05/preview.webp">
     <link rel="icon" type="image/png" sizes="32x32" href="https://ahsan.tv/wp-content/uploads/2026/05/quran.webp">
     <link rel="icon" type="image/png" sizes="32x32" href="https://ahsan.tv/wp-content/uploads/2026/05/ahsan.webp">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300..700&display=swap" rel="stylesheet">
     <title>Quiz Surat</title>
-    <style>
-        @font-face {
-            font-family: 'FredokaCustom';
-            src: url('fonts/Fredoka-Medium.ttf') format('truetype');
-            font-weight: 500;
-            font-style: normal;
-        }
+<style>
+    /* Mengambil font Fredoka dengan weight 500 (Medium) & 600 dari Google Fonts API */
+    @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap');
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            font-family: 'FredokaCustom', sans-serif;
-            height: 100vh;
-            width: 100vw;
-            display: flex;
-            justify-content: center;
-            background-image: url('https://ahsan.tv/wp-content/uploads/2026/05/banner.webp');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            overflow: hidden;
-        }
+    body {
+        /* Menggunakan font Fredoka dari Google Fonts */
+        font-family: 'Fredoka', sans-serif;
+        font-weight: 500; /* Set default ke Medium */
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        background-image: url('https://ahsan.tv/wp-content/uploads/2026/05/banner.webp');
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        overflow: hidden;
+    }
 
-        .container {
-            width: 100%;
-            max-width: 1600px;
-            height: 100%;
-            display: grid;
-            grid-template-rows: 12% 1fr 20%; 
-            padding: 0 40px;
-        }
+    .container {
+        width: 100%;
+        max-width: 1600px;
+        height: 100%;
+        display: grid;
+        grid-template-rows: 12% 1fr 20%; 
+        padding: 0 40px;
+    }
 
-        .page-wrapper {
-            grid-row: 2;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-            position: relative;
-        }
+    .page-wrapper {
+        grid-row: 2;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        position: relative;
+    }
 
-        .hidden { display: none !important; }
+    .hidden { display: none !important; }
 
-        /* ── Footer & Tombol Bawah ── */
-        footer {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            pointer-events: none;
-            z-index: 100;
-        }
+    /* ── Footer & Tombol Bawah ── */
+    footer {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        pointer-events: none;
+        z-index: 100;
+    }
 
-        .footer-nav {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-            padding: 0 40px 40px 40px;
-            pointer-events: none;
-        }
+    .footer-nav {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        padding: 0 40px 40px 40px;
+        pointer-events: none;
+    }
 
-        .reset-btn, .back-btn {
-            background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
-            color: #0d5c8a;
-            border: 2px solid rgba(255,255,255,0.85);
-            padding: 25px 65px;
-            border-radius: 25px;
-            cursor: pointer;
-            font-size: 27px;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
-            user-select: none;
-            backdrop-filter: blur(6px);
-            pointer-events: all;
-        }
+    /* ── Grup tombol kiri bawah ── */
+    .footer-left {
+        position: fixed;
+        bottom: 40px;
+        left: 40px;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        pointer-events: all;
+    }
 
-        .reset-btn:hover, .back-btn:hover {
-            background: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(185,230,255,0.80) 100%);
-            transform: translateY(-8px);
-        }
+    .reset-btn, .back-btn {
+        background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
+        color: #0d5c8a;
+        border: 2px solid rgba(255,255,255,0.85);
+        padding: 18px; /* Ikon saja */
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 27px;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0;
+        transition: all 0.3s ease;
+        box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
+        user-select: none;
+        backdrop-filter: blur(6px);
+        pointer-events: all;
+    }
 
-        .reset-btn img, .back-btn img { width: 55px; height: 55px; }
+    .reset-btn:hover, .back-btn:hover {
+        background: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(185,230,255,0.80) 100%);
+        transform: translateY(-8px);
+    }
 
-        /* ── Grup tombol kiri bawah ── */
-        .footer-left {
-            position: fixed;
-            bottom: 40px;
-            left: 40px;
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            pointer-events: all;
-        }
+    .reset-btn img, .back-btn img { width: 38px; height: 38px; }
 
-        /* ── Tombol Reset & Back — ikon saja, kecil ── */
-        .reset-btn, .back-btn {
-            padding: 18px;
-            border-radius: 20px;
-            gap: 0;
-        }
+    /* ── Solusi Grid Merapat ke Tengah ── */
+    .fruits-grid, .branch-grid {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 40px;
+        width: 100%;
+    }
 
-        .reset-btn img, .back-btn img { width: 38px; height: 38px; }
+    .fruit-card, .branch-card {
+        background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
+        border-radius: 35px;
+        padding: 65px 40px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
+        border: 2px solid rgba(255,255,255,0.85);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        width: calc(25% - 40px);
+        min-width: 280px;
+    }
 
-        /* ── Solusi Grid Merapat ke Tengah ── */
-        .fruits-grid, .branch-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 40px;
-            width: 100%;
-        }
+    .branch-grid .branch-card {
+        width: calc(20% - 40px); 
+        min-width: 250px;
+    }
 
-        .fruit-card, .branch-card {
-            background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
-            border-radius: 35px;
-            padding: 65px 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
-            border: 2px solid rgba(255,255,255,0.85);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            width: calc(25% - 40px);
-            min-width: 280px;
-        }
+    .fruit-card.disabled, .branch-card.disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+        transform: none !important;
+    }
 
-        .branch-grid .branch-card {
-            width: calc(20% - 40px); 
-            min-width: 250px;
-        }
+    .fruit-icon, .branch-icon, .cross-icon {
+        width: 200px;
+        height: 200px;
+        margin-bottom: 30px;
+        object-fit: contain;
+    }
 
-        .fruit-card.disabled, .branch-card.disabled {
-            opacity: 0.6;
-            cursor: not-allowed;
-            transform: none !important;
-        }
+    .fruit-name, .branch-label {
+        font-size: 42px;
+        color: #0d5c8a;
+        line-height: 1.2;
+        font-weight: 600;
+        text-shadow: 0 1px 3px rgba(255,255,255,0.6);
+    }
 
-        .fruit-icon, .branch-icon, .cross-icon {
-            width: 200px;
-            height: 200px;
-            margin-bottom: 30px;
-            object-fit: contain;
-        }
+    /* ── Loader ── */
+    .loader-container {
+        text-align: center;
+        width: 100%;
+    }
 
-        .fruit-name, .branch-label {
-            font-size: 42px;
-            color: #0d5c8a;
-            line-height: 1.2;
-            font-weight: 600;
-            text-shadow: 0 1px 3px rgba(255,255,255,0.6);
-        }
+    .ellipsis-loader {
+        display: flex;
+        gap: 25px;
+        justify-content: center;
+        margin-bottom: 30px;
+    }
 
-        /* ── Loader ── */
-        .loader-container {
-            text-align: center;
-            width: 100%;
-        }
+    .ellipsis-loader div {
+        width: 40px; height: 40px;
+        border-radius: 50%;
+        background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
+        border: 2px solid rgba(255,255,255,0.85);
+        box-shadow: 0 4px 12px rgba(30, 120, 180, 0.25);
+        animation: bounce 1.2s infinite ease-in-out;
+    }
 
-        .ellipsis-loader {
-            display: flex;
-            gap: 25px;
-            justify-content: center;
-            margin-bottom: 30px;
-        }
+    @keyframes bounce {
+        0%, 80%, 100% { transform: scale(0.6); }
+        40% { transform: scale(1.2); }
+    }
 
-        .ellipsis-loader div {
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
-            border: 2px solid rgba(255,255,255,0.85);
-            box-shadow: 0 4px 12px rgba(30, 120, 180, 0.25);
-            animation: bounce 1.2s infinite ease-in-out;
-        }
+    .loading-text { font-size: 50px; color: #0d5c8a; font-weight: 600; text-shadow: 0 1px 3px rgba(255,255,255,0.6); }
 
-        @keyframes bounce {
-            0%, 80%, 100% { transform: scale(0.6); }
-            40% { transform: scale(1.2); }
-        }
+    .answer-text {
+        font-size: 110px;
+        color: #000000;
+        font-weight: 600;
+        text-align: center;
+        line-height: 1.1;
+        padding: 0 20px;
+        text-shadow: 0 2px 8px rgba(255,255,255,0.7);
+    }
 
-        .loading-text { font-size: 50px; color: #0d5c8a; font-weight: 600; text-shadow: 0 1px 3px rgba(255,255,255,0.6); }
+    /* ── Responsive Mobile ── */
+    @media (max-width: 768px) {
+        body { overflow-y: auto; }
+        .container { grid-template-rows: auto 1fr auto; height: auto; padding: 20px; }
+        .page-wrapper { margin: 30px 0; }
+        .fruit-card, .branch-card { width: calc(50% - 20px) !important; min-width: 140px; padding: 30px 10px; border-radius: 20px; }
+        .fruit-icon, .branch-icon { width: 100px; height: 100px; }
+        .fruit-name, .branch-label { font-size: 20px; }
+        .answer-text { font-size: 45px; }
+        .reset-btn, .back-btn { padding: 15px; font-size: 22px; }
+        .reset-btn img, .back-btn img { width: 30px; height: 30px; }
+        .footer-nav { padding: 0 20px 20px 20px; }
+    }
 
-        .answer-text {
-            font-size: 110px;
-            color: #000000;
-            font-weight: 600;
-            text-align: center;
-            line-height: 1.1;
-            padding: 0 20px;
-            text-shadow: 0 2px 8px rgba(255,255,255,0.7);
-        }
-
-        /* ── Responsive Mobile ── */
-        @media (max-width: 768px) {
-            body { overflow-y: auto; }
-            .container { grid-template-rows: auto 1fr auto; height: auto; padding: 20px; }
-            .page-wrapper { margin: 30px 0; }
-            .fruit-card, .branch-card { width: calc(50% - 20px) !important; min-width: 140px; padding: 30px 10px; border-radius: 20px; }
-            .fruit-icon, .branch-icon { width: 100px; height: 100px; }
-            .fruit-name, .branch-label { font-size: 20px; }
-            .answer-text { font-size: 45px; }
-            .reset-btn {
-                bottom: 20px;
-                left: 20px;
-                padding: 15px 30px;
-                font-size: 22px;
-            }
-            .reset-btn img { width: 30px; height: 30px; }
-            .back-btn { padding: 15px 30px; font-size: 22px; }
-            .back-btn img { width: 30px; height: 30px; }
-            .footer-nav { padding: 0 20px 20px 20px; }
-        }
-
-        @keyframes popUp {
-            0%   { opacity: 0; transform: scale(0.9); }
-            100% { opacity: 1; transform: scale(1); }
-        }
-        .pop-up { animation: popUp 0.4s ease-out forwards; }
-    </style>
+    @keyframes popUp {
+        0%   { opacity: 0; transform: scale(0.9); }
+        100% { opacity: 1; transform: scale(1); }
+    }
+    .pop-up { animation: popUp 0.4s ease-out forwards; }
+</style>
 </head>
 <body>
     <div class="container">
