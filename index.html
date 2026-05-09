@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <meta property="og:title" content="Quiz Surat">
     <meta property="og:description" content="Quiz Surat untuk program ahsantv bersama abu sahla">
-    <meta property="og:image" content="https://quiz-anak-alternative.vercel.app/assets/Group-10.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/qurann.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/ahsan.png">
+    <meta property="og:image" content="https://ahsan.tv/wp-content/uploads/2026/05/preview.webp">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ahsan.tv/wp-content/uploads/2026/05/quran.webp">
+    <link rel="icon" type="image/png" sizes="32x32" href="https://ahsan.tv/wp-content/uploads/2026/05/ahsan.webp">
     <title>Quiz Surat</title>
     <style>
         @font-face {
@@ -29,7 +29,7 @@
             width: 100vw;
             display: flex;
             justify-content: center;
-            background-image: url('assets/banner.jpg');
+            background-image: url('https://ahsan.tv/wp-content/uploads/2026/05/banner.webp');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
@@ -253,19 +253,19 @@
             <div id="mainView" class="width-full">
                 <div class="fruits-grid pop-up" id="fruitsGrid">
                     <div class="fruit-card" onclick="selectFruit('pineapple')">
-                        <img src="assets/qurann.png" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/quran.webp" class="fruit-icon">
                         <div class="fruit-name">Ayat<br>Al-Quran</div>
                     </div>
                     <div class="fruit-card" onclick="selectFruit('apple')">
-                        <img src="assets/scroll.png" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/scroll.webp" class="fruit-icon">
                         <div class="fruit-name">Hadits<br>Nabi</div>
                     </div>
                     <div class="fruit-card" onclick="selectFruit('watermelon')">
-                        <img src="assets/doa.png" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/doa.webp" class="fruit-icon">
                         <div class="fruit-name">Doa - Doa</div>
                     </div>
                     <div class="fruit-card" onclick="selectFruit('orange')">
-                        <img src="assets/arabic.png" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/arabic.webp" class="fruit-icon">
                         <div class="fruit-name">Bahasa<br>Arab</div>
                     </div>
                 </div>
@@ -286,17 +286,17 @@
     <footer>
         <div class="footer-left">
             <button class="reset-btn" id="resetBtn" onclick="resetAll()">
-                <img src="assets/refresh.png">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/05/refresh.webp">
             </button>
             <button class="back-btn hidden" id="backBtn" onclick="goBack()">
-                <img src="assets/arrow.png">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/05/arrow.webp">
                 <span>Kembali</span>
             </button>
         </div>
     </footer>
 
-    <audio id="clickSound" preload="auto"><source src="sounds/click.MP3" type="audio/mp3"></audio>
-    <audio id="backSound" preload="auto"><source src="sounds/back.MP3" type="audio/mp3"></audio>
+    <audio id="clickSound" preload="auto"><source src="https://ahsan.tv/wp-content/uploads/2026/05/click.mp3" type="audio/mp3"></audio>
+    <audio id="backSound" preload="auto"><source src="https://ahsan.tv/wp-content/uploads/2026/05/back.mp3" type="audio/mp3"></audio>
 
     <script>
         let usedBranches = JSON.parse(localStorage.getItem('usedBranches')) || {};
@@ -312,20 +312,20 @@
 
         const branchOptions = {
             pineapple: [
-                { icon: 'assets/pineapple.png', label: 'nanas' }, { icon: 'assets/apple.png', label: 'apel' },
-                { icon: 'assets/watermelon.png', label: 'semangka' }, { icon: 'assets/orange.png', label: 'jeruk' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/pineapple.webp', label: 'nanas' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/apple.webp', label: 'apel' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/watermelon.webp', label: 'semangka' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/orange.webp', label: 'jeruk' },
             ],
             apple: [
-                { icon: 'assets/banana.png', label: 'pisang' }, { icon: 'assets/mango.png', label: 'mangga' },
-                { icon: 'assets/grapes.png', label: 'anggur' }, { icon: 'assets/strawberry.png', label: 'strawberry' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/banana.webp', label: 'pisang' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/mango.webp', label: 'mangga' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/grapes.webp', label: 'anggur' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/strawberry.webp', label: 'strawberry' },
             ],
             watermelon: [
-                { icon: 'assets/avocado.png', label: 'alpukat' }, { icon: 'assets/durian.png', label: 'durian' },
-                { icon: 'assets/kiwi.png', label: 'kiwi' }, { icon: 'assets/pear.png', label: 'pir' }, { icon: 'assets/mangosteen.png', label: 'manggis' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/avocado.webp', label: 'alpukat' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/durian.webp', label: 'durian' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/kiwi.webp', label: 'kiwi' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/pear.webp', label: 'pir' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/mangosteen.webp', label: 'manggis' },
             ],
             orange: [
-                { icon: 'assets/lychee.png', label: 'leci' }, { icon: 'assets/papaya.png', label: 'pepaya' },
-                { icon: 'assets/dragonfruit.png', label: 'naga' }, { icon: 'assets/cherry.png', label: 'ceri' }, { icon: 'assets/Pomegranate.png', label: 'delima' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/lychee.webp', label: 'leci' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/papaya.webp', label: 'pepaya' },
+                { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/dragonfruit.webp', label: 'naga' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/cherry.webp', label: 'ceri' }, { icon: 'https://ahsan.tv/wp-content/uploads/2026/05/Pomegranate.webp', label: 'delima' },
             ],
         };
 
@@ -381,7 +381,7 @@
                 const card = document.createElement('div');
                 card.className = `branch-card ${used.includes(i) ? 'disabled' : ''}`;
                 if (used.includes(i)) {
-                    card.innerHTML = `<img src="assets/cross.png" class="cross-icon"><div class="branch-label">${opt.label}</div>`;
+                    card.innerHTML = `<img src="https://ahsan.tv/wp-content/uploads/2026/05/cross.webp" class="cross-icon"><div class="branch-label">${opt.label}</div>`;
                 } else {
                     card.innerHTML = `<img src="${opt.icon}" class="branch-icon"><div class="branch-label">${opt.label}</div>`;
                     card.onclick = () => selectBranch(i);
