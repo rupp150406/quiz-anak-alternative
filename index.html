@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Quiz interaktif islami untuk anak-anak: tebak ayat Al-Quran, Hadits Nabi, Doa sehari-hari, dan Bahasa Arab. Cocok untuk program AhsanTV bersama Abu Sahla.">
     <meta property="og:title" content="Quiz Surat">
     <meta property="og:description" content="Quiz Surat untuk program ahsantv bersama abu sahla">
     <meta property="og:image" content="https://ahsan.tv/wp-content/uploads/2026/05/preview.webp">
@@ -63,13 +64,13 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            pointer-events: none; /* agar area kosong footer tidak menghalangi klik */
+            pointer-events: none;
             z-index: 100;
         }
 
         .footer-nav {
             display: flex;
-            justify-content: flex-end; /* tombol back tetap di kanan tengah bawah */
+            justify-content: flex-end;
             align-items: center;
             padding: 0 40px 40px 40px;
             pointer-events: none;
@@ -91,7 +92,7 @@
             box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
             user-select: none;
             backdrop-filter: blur(6px);
-            pointer-events: all; /* aktifkan klik hanya pada tombol */
+            pointer-events: all;
         }
 
         .reset-btn:hover, .back-btn:hover {
@@ -243,7 +244,7 @@
 <body>
     <div class="container">
         <div></div>
-        <div class="page-wrapper" id="pageContent">
+        <main class="page-wrapper" id="pageContent">
             
             <div class="loader-container hidden" id="globalLoader">
                 <div class="ellipsis-loader"><div></div><div></div><div></div></div>
@@ -253,19 +254,19 @@
             <div id="mainView" class="width-full">
                 <div class="fruits-grid pop-up" id="fruitsGrid">
                     <div class="fruit-card" onclick="selectFruit('pineapple')">
-                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/quran.webp" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/quran.webp" class="fruit-icon" alt="Ikon Al-Quran">
                         <div class="fruit-name">Ayat<br>Al-Quran</div>
                     </div>
                     <div class="fruit-card" onclick="selectFruit('apple')">
-                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/scroll.webp" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/scroll.webp" class="fruit-icon" alt="Ikon Gulungan Hadits">
                         <div class="fruit-name">Hadits<br>Nabi</div>
                     </div>
                     <div class="fruit-card" onclick="selectFruit('watermelon')">
-                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/doa.webp" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/doa.webp" class="fruit-icon" alt="Ikon Doa">
                         <div class="fruit-name">Doa - Doa</div>
                     </div>
                     <div class="fruit-card" onclick="selectFruit('orange')">
-                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/arabic.webp" class="fruit-icon">
+                        <img src="https://ahsan.tv/wp-content/uploads/2026/05/arabic.webp" class="fruit-icon" alt="Ikon Bahasa Arab">
                         <div class="fruit-name">Bahasa<br>Arab</div>
                     </div>
                 </div>
@@ -279,17 +280,17 @@
                 <div class="answer-text" id="answerText"></div>
             </div>
 
-        </div>
+        </main>
     </div>
 
     <!-- Footer dengan tombol Reset & Kembali di kiri bawah -->
     <footer>
         <div class="footer-left">
-            <button class="reset-btn" id="resetBtn" onclick="resetAll()">
-                <img src="https://ahsan.tv/wp-content/uploads/2026/05/refresh.webp">
+            <button class="reset-btn" id="resetBtn" onclick="resetAll()" aria-label="Reset Ulang Quiz">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/05/refresh.webp" alt="">
             </button>
             <button class="back-btn hidden" id="backBtn" onclick="goBack()">
-                <img src="https://ahsan.tv/wp-content/uploads/2026/05/arrow.webp">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/05/arrow.webp" alt="">
                 <span>Kembali</span>
             </button>
         </div>
@@ -304,7 +305,7 @@
         let audioEnabled = false;
 
         const contentData = {
-            pineapple: ["إِنَّ سَعْيَكُمْ لَشَتَّىٰ", "فَأَمَّا مَنْ أَعْطَىٰ وَاتَّقَىٰ", "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ", "فَإِذَا فَرَغْتَ فَانْصَبْ"],
+            pineapple: ["إِنَّ سَعْيَكُمْ لَشَتَّىٰ", "فَأَمَّا مَنْ أَعْطَىٰ وَاتَّقَىٰ", "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ", "فَإِذَا فَرَغْتَ فَانْصَبْ"],
             apple: ['Hadits Senyum adalah sedekah', 'Hadits larangan marah', 'Hadits larangan minum sambil berdiri', 'Hadits niat'],
             watermelon: ['Doa keluar masjid', 'Doa setelah hujan reda', 'Doa sesudah makan', 'Doa bangun tidur', 'Doa menggunakan baju'],
             orange: ['Bintang', 'Kursi', 'Ayam', 'Jagung', 'Pepaya']
@@ -381,9 +382,9 @@
                 const card = document.createElement('div');
                 card.className = `branch-card ${used.includes(i) ? 'disabled' : ''}`;
                 if (used.includes(i)) {
-                    card.innerHTML = `<img src="https://ahsan.tv/wp-content/uploads/2026/05/cross.webp" class="cross-icon"><div class="branch-label">${opt.label}</div>`;
+                    card.innerHTML = `<img src="https://ahsan.tv/wp-content/uploads/2026/05/cross.webp" class="cross-icon" alt="Sudah digunakan"><div class="branch-label">${opt.label}</div>`;
                 } else {
-                    card.innerHTML = `<img src="${opt.icon}" class="branch-icon"><div class="branch-label">${opt.label}</div>`;
+                    card.innerHTML = `<img src="${opt.icon}" class="branch-icon" alt="${opt.label}"><div class="branch-label">${opt.label}</div>`;
                     card.onclick = () => selectBranch(i);
                 }
                 grid.appendChild(card);
