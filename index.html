@@ -18,6 +18,50 @@
     /* Mengambil font Fredoka dengan weight 500 (Medium) & 600 dari Google Fonts API */
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap');
 
+    /* ── Theme Variables ── */
+    :root {
+        /* Light Blue Cloudy (default) */
+        --bg-image: url('https://ahsan.tv/wp-content/uploads/2026/05/banner.webp');
+        --card-bg: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
+        --card-border: 2px solid rgba(255,255,255,0.85);
+        --card-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
+        --card-hover-bg: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(185,230,255,0.80) 100%);
+        --text-color: #0d5c8a;
+        --loader-dot-bg: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
+        --loader-dot-border: 2px solid rgba(255,255,255,0.85);
+        --loader-dot-shadow: 0 4px 12px rgba(30, 120, 180, 0.25);
+        --loading-text-color: #0d5c8a;
+        --loading-text-shadow: 0 1px 3px rgba(255,255,255,0.6);
+        --answer-color: #000000;
+        --answer-shadow: 0 2px 8px rgba(255,255,255,0.7);
+        --btn-bg: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
+        --btn-color: #0d5c8a;
+        --btn-border: 2px solid rgba(255,255,255,0.85);
+        --btn-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
+        --btn-hover-bg: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(185,230,255,0.80) 100%);
+    }
+
+    body.theme-emerald {
+        --bg-image: url('https://ahsan.tv/wp-content/uploads/2026/06/bannerr.webp');
+        --card-bg: linear-gradient(135deg, #6E7E67 0%, #3F433D 100%);
+        --card-border: none;
+        --card-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        --card-hover-bg: linear-gradient(135deg, #5d6c57 0%, #35382f 100%);
+        --text-color: #ffffff;
+        --loader-dot-bg: #6E7E67;
+        --loader-dot-border: none;
+        --loader-dot-shadow: none;
+        --loading-text-color: #6E7E67;
+        --loading-text-shadow: none;
+        --answer-color: #6E7E67;
+        --answer-shadow: none;
+        --btn-bg: #6E7E67;
+        --btn-color: #ffffff;
+        --btn-border: none;
+        --btn-shadow: 0 15px 35px rgba(0,0,0,0.25);
+        --btn-hover-bg: #5d6c57;
+    }
+
     * {
         margin: 0;
         padding: 0;
@@ -32,11 +76,12 @@
         width: 100vw;
         display: flex;
         justify-content: center;
-        background-image: url('https://ahsan.tv/wp-content/uploads/2026/05/banner.webp');
+        background-image: var(--bg-image);
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         overflow: hidden;
+        transition: background-image 0.5s ease;
     }
 
     .container {
@@ -90,9 +135,9 @@
     }
 
     .reset-btn, .back-btn {
-        background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
-        color: #0d5c8a;
-        border: 2px solid rgba(255,255,255,0.85);
+        background: var(--btn-bg);
+        color: var(--btn-color);
+        border: var(--btn-border);
         padding: 18px; /* Ikon saja */
         border-radius: 20px;
         cursor: pointer;
@@ -102,14 +147,14 @@
         align-items: center;
         gap: 0;
         transition: all 0.3s ease;
-        box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
+        box-shadow: var(--btn-shadow);
         user-select: none;
         backdrop-filter: blur(6px);
         pointer-events: all;
     }
 
     .reset-btn:hover, .back-btn:hover {
-        background: linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(185,230,255,0.80) 100%);
+        background: var(--btn-hover-bg);
         transform: translateY(-8px);
     }
 
@@ -125,20 +170,24 @@
     }
 
     .fruit-card, .branch-card {
-        background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
+        background: var(--card-bg);
         border-radius: 35px;
         padding: 65px 40px;
         text-align: center;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
-        border: 2px solid rgba(255,255,255,0.85);
+        box-shadow: var(--card-shadow);
+        border: var(--card-border);
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
         width: calc(25% - 40px);
         min-width: 280px;
+    }
+
+    .fruit-card:hover:not(.disabled), .branch-card:hover:not(.disabled) {
+        background: var(--card-hover-bg);
     }
 
     .branch-grid .branch-card {
@@ -161,10 +210,10 @@
 
     .fruit-name, .branch-label {
         font-size: 42px;
-        color: #0d5c8a;
+        color: var(--text-color);
         line-height: 1.2;
         font-weight: 600;
-        text-shadow: 0 1px 3px rgba(255,255,255,0.6);
+        text-shadow: 0 1px 3px rgba(255,255,255,0.3);
     }
 
     /* ── Loader ── */
@@ -183,9 +232,9 @@
     .ellipsis-loader div {
         width: 40px; height: 40px;
         border-radius: 50%;
-        background: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
-        border: 2px solid rgba(255,255,255,0.85);
-        box-shadow: 0 4px 12px rgba(30, 120, 180, 0.25);
+        background: var(--loader-dot-bg);
+        border: var(--loader-dot-border);
+        box-shadow: var(--loader-dot-shadow);
         animation: bounce 1.2s infinite ease-in-out;
     }
 
@@ -194,16 +243,16 @@
         40% { transform: scale(1.2); }
     }
 
-    .loading-text { font-size: 50px; color: #0d5c8a; font-weight: 600; text-shadow: 0 1px 3px rgba(255,255,255,0.6); }
+    .loading-text { font-size: 50px; color: var(--loading-text-color); font-weight: 600; text-shadow: var(--loading-text-shadow); }
 
     .answer-text {
         font-size: 110px;
-        color: #000000;
+        color: var(--answer-color);
         font-weight: 600;
         text-align: center;
         line-height: 1.1;
         padding: 0 20px;
-        text-shadow: 0 2px 8px rgba(255,255,255,0.7);
+        text-shadow: var(--answer-shadow);
     }
 
     /* ── Responsive Mobile ── */
@@ -225,6 +274,112 @@
         100% { opacity: 1; transform: scale(1); }
     }
     .pop-up { animation: popUp 0.4s ease-out forwards; }
+
+    /* ── Theme Switcher ── */
+    .theme-btn {
+        background: var(--btn-bg);
+        color: var(--btn-color);
+        border: var(--btn-border);
+        padding: 18px;
+        border-radius: 20px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s ease;
+        box-shadow: var(--btn-shadow);
+        user-select: none;
+        backdrop-filter: blur(6px);
+        pointer-events: all;
+        position: fixed;
+        bottom: 40px;
+        right: 40px;
+        z-index: 200;
+    }
+
+    .theme-btn:hover { transform: translateY(-8px); }
+    .theme-btn img { width: 38px; height: 38px; }
+
+    /* Theme panel */
+    .theme-panel {
+        position: fixed;
+        bottom: 110px;
+        right: 40px;
+        z-index: 300;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        pointer-events: all;
+        opacity: 0;
+        transform: translateY(20px) scale(0.95);
+        transition: opacity 0.25s ease, transform 0.25s ease;
+        pointer-events: none;
+    }
+
+    .theme-panel.open {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        pointer-events: all;
+    }
+
+    .theme-option {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        padding: 14px 22px;
+        border-radius: 20px;
+        cursor: pointer;
+        font-size: 24px;
+        font-weight: 600;
+        transition: all 0.25s ease;
+        white-space: nowrap;
+        box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+        border: 2px solid rgba(255,255,255,0.7);
+        backdrop-filter: blur(10px);
+        user-select: none;
+    }
+
+    .theme-option.theme-cloudy {
+        background: linear-gradient(135deg, rgba(255,255,255,0.82) 0%, rgba(185,230,255,0.72) 100%);
+        color: #0d5c8a;
+    }
+
+    .theme-option.theme-cloudy:hover, .theme-option.theme-cloudy.active {
+        background: linear-gradient(135deg, rgba(255,255,255,0.96) 0%, rgba(185,230,255,0.92) 100%);
+        transform: translateX(-6px);
+    }
+
+    .theme-option.theme-jade {
+        background: linear-gradient(135deg, #6E7E67 0%, #4a5245 100%);
+        color: #ffffff;
+        border-color: rgba(255,255,255,0.3);
+    }
+
+    .theme-option.theme-jade:hover, .theme-option.theme-jade.active {
+        background: linear-gradient(135deg, #7e9076 0%, #3d4439 100%);
+        transform: translateX(-6px);
+    }
+
+    .theme-option .dot {
+        width: 18px; height: 18px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        border: 2px solid currentColor;
+    }
+
+    .theme-option.theme-cloudy .dot { background: #57b4e8; }
+    .theme-option.theme-jade .dot { background: #a3b89a; }
+
+    .theme-option.active .dot {
+        box-shadow: 0 0 0 3px currentColor;
+    }
+
+    @media (max-width: 768px) {
+        .theme-btn { bottom: 20px; right: 20px; padding: 12px; }
+        .theme-btn img { width: 28px; height: 28px; }
+        .theme-panel { bottom: 90px; right: 20px; }
+        .theme-option { font-size: 18px; padding: 10px 16px; }
+    }
 </style>
 </head>
 <body>
@@ -281,6 +436,23 @@
             </button>
         </div>
     </footer>
+
+    <!-- Theme panel -->
+    <div class="theme-panel" id="themePanel">
+        <div class="theme-option theme-cloudy" onclick="applyTheme('cloudy')" id="opt-cloudy">
+            <span class="dot"></span>
+            Light Blue Cloudy
+        </div>
+        <div class="theme-option theme-jade" onclick="applyTheme('emerald')" id="opt-emerald">
+            <span class="dot"></span>
+            Emerald Jade Ramadhan
+        </div>
+    </div>
+
+    <!-- Theme toggle button -->
+    <button class="theme-btn" id="themeBtn" onclick="toggleThemePanel()" aria-label="Ganti Tema">
+        <img src="https://ahsan.tv/wp-content/uploads/2026/06/theme.webp" alt="Theme">
+    </button>
 
     <audio id="clickSound" preload="auto"><source src="https://ahsan.tv/wp-content/uploads/2026/05/click.mp3" type="audio/mp3"></audio>
     <audio id="backSound" preload="auto"><source src="https://ahsan.tv/wp-content/uploads/2026/05/back.mp3" type="audio/mp3"></audio>
@@ -424,6 +596,63 @@
         }
 
         if (!assignedCountries) buildAssignedCountries();
+
+        /* ── Theme Switcher Logic ── */
+        let themePanelOpen = false;
+        const THEME_KEY = 'selectedTheme';
+
+        function toggleThemePanel() {
+            enableAudio();
+            themePanelOpen = !themePanelOpen;
+            const panel = document.getElementById('themePanel');
+            if (themePanelOpen) {
+                panel.classList.add('open');
+            } else {
+                panel.classList.remove('open');
+            }
+        }
+
+        function applyTheme(theme) {
+            playClick();
+            const body = document.body;
+
+            // Remove all theme classes
+            body.classList.remove('theme-emerald');
+
+            // Apply selected theme
+            if (theme === 'emerald') {
+                body.classList.add('theme-emerald');
+            }
+
+            // Save to localStorage
+            localStorage.setItem(THEME_KEY, theme);
+
+            // Update active indicators
+            document.getElementById('opt-cloudy').classList.toggle('active', theme === 'cloudy');
+            document.getElementById('opt-emerald').classList.toggle('active', theme === 'emerald');
+
+            // Close panel after selection
+            setTimeout(() => {
+                themePanelOpen = false;
+                document.getElementById('themePanel').classList.remove('open');
+            }, 300);
+        }
+
+        // Close theme panel when clicking outside
+        document.addEventListener('click', function(e) {
+            if (themePanelOpen &&
+                !document.getElementById('themePanel').contains(e.target) &&
+                !document.getElementById('themeBtn').contains(e.target)) {
+                themePanelOpen = false;
+                document.getElementById('themePanel').classList.remove('open');
+            }
+        });
+
+        // Load saved theme on startup
+        (function initTheme() {
+            const saved = localStorage.getItem(THEME_KEY) || 'cloudy';
+            applyTheme(saved);
+        })();
     </script>
 </body>
 </html>
