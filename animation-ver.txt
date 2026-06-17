@@ -15,13 +15,11 @@
     <meta name="google-site-verification" content="7pPrOCq2OIaUWLrs53SGGeJ1FYkgBXU0Du2NWr2mCqQ" />
     <title>Quiz Surat</title>
 <style>
-    /* Mengambil font Fredoka dengan weight 500 (Medium) & 600 dari Google Fonts API */
     @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&display=swap');
 
     /* ── Theme Variables ── */
     :root {
-        /* Light Blue Cloudy (default) */
-        --bg-image: url('https://ahsan.tv/wp-content/uploads/2026/05/banner.webp');
+        /* No --bg-image for cloudy; sky.webm video handles the background */
         --card-bg: linear-gradient(135deg, rgba(255,255,255,0.75) 0%, rgba(185,230,255,0.65) 100%);
         --card-border: 2px solid rgba(255,255,255,0.85);
         --card-shadow: 0 15px 35px rgba(30, 120, 180, 0.25);
@@ -42,78 +40,44 @@
     }
 
 body.theme-emerald {
-    /* Background Image Hutan Pinus Berkabut */
     --bg-image: url('https://ahsan.tv/wp-content/uploads/2026/06/bannerr.webp');
-    
-    /* Card: Semi-transparan agar tekstur kabut & pohon di background tetap tembus */
     --card-bg: linear-gradient(135deg, rgba(240, 245, 238, 0.75) 0%, rgba(165, 185, 155, 0.60) 100%);
     --card-border: 2px solid rgba(255, 255, 255, 0.85);
     --card-shadow: 0 15px 35px rgba(45, 60, 40, 0.25);
-    
-    /* Card Hover: Sedikit lebih solid dan terang saat disentuh */
     --card-hover-bg: linear-gradient(135deg, rgba(245, 248, 243, 0.88) 0%, rgba(175, 195, 165, 0.75) 100%);
-    
-    /* Text Color: Menggunakan hijau pinus pekat agar sangat kontras dan terbaca jelas */
     --text-color: #2D3A26;
-    
-    /* Loader: Menyesuaikan style glassmorphism card */
     --loader-dot-bg: linear-gradient(135deg, rgba(240, 245, 238, 0.75) 0%, rgba(165, 185, 155, 0.60) 100%);
     --loader-dot-border: 2px solid rgba(255, 255, 255, 0.85);
     --loader-dot-shadow: 0 4px 12px rgba(45, 60, 40, 0.25);
-    
-    /* Loading Text: Selaras dengan teks utama */
     --loading-text-color: #2D3A26;
     --loading-text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
-    
-    /* Answer: Hitam pekat dengan glow putih lembut di sekelilingnya agar menonjol di area tengah yang berkabut */
     --answer-color: #000000;
     --answer-shadow: 0 2px 10px rgba(255, 255, 255, 0.85);
-    
-    /* Tombol Navigasi: Mengikuti style glassmorphism card agar serasi */
     --btn-bg: linear-gradient(135deg, rgba(240, 245, 238, 0.75) 0%, rgba(165, 185, 155, 0.60) 100%);
     --btn-color: #2D3A26;
     --btn-border: 2px solid rgba(255, 255, 255, 0.85);
     --btn-shadow: 0 15px 35px rgba(45, 60, 40, 0.25);
-    
-    /* Tombol Hover */
     --btn-hover-bg: linear-gradient(135deg, rgba(245, 248, 243, 0.88) 0%, rgba(175, 195, 165, 0.75) 100%);
 }
 
 body.theme-desert {
-    /* Background Image Tema Gurun Pasir Warm Pastel */
-    --bg-image: url('https://ahsan.tv/wp-content/uploads/2026/06/bannerrr.webp');
-    
-    /* Card: Transparansi berbasis warna pasir hangat/krem pastel agar gradasi gurun di belakang menembus dengan lembut */
+    /* No --bg-image needed; video element handles the background */
     --card-bg: linear-gradient(135deg, rgba(255, 248, 235, 0.70) 0%, rgba(230, 210, 185, 0.55) 100%);
     --card-border: 2px solid rgba(255, 255, 255, 0.80);
     --card-shadow: 0 15px 35px rgba(120, 90, 70, 0.18);
-    
-    /* Card Hover: Sedikit lebih terang seperti kilauan cahaya matahari di pasir */
     --card-hover-bg: linear-gradient(135deg, rgba(255, 251, 242, 0.85) 0%, rgba(238, 220, 198, 0.70) 100%);
-    
-    /* Text Color: Cokelat terracotta gelap/slate yang diambil dari bayangan bukit gurun agar sangat kontras dan tegas */
     --text-color: #5C4433;
-    
-    /* Loader: Menyelaraskan efek glassmorphic dengan tema gurun */
     --loader-dot-bg: linear-gradient(135deg, rgba(255, 248, 235, 0.70) 0%, rgba(230, 210, 185, 0.55) 100%);
     --loader-dot-border: 2px solid rgba(255, 255, 255, 0.80);
     --loader-dot-shadow: 0 4px 12px rgba(120, 90, 70, 0.15);
-    
-    /* Loading Text */
     --loading-text-color: #5C4433;
     --loading-text-shadow: 0 1px 3px rgba(255, 255, 255, 0.6);
-    
-    /* Answer Text: Hitam pekat dengan glow putih pastel di sekelilingnya agar tulisan arab/hadits "pop-out" di tengah gurun */
     --answer-color: #000000;
     --answer-shadow: 0 2px 10px rgba(255, 250, 240, 0.9);
-    
-    /* Tombol Navigasi: Konsisten menggunakan basis glassmorphism pastel */
     --btn-bg: linear-gradient(135deg, rgba(255, 248, 235, 0.70) 0%, rgba(230, 210, 185, 0.55) 100%);
     --btn-color: #5C4433;
     --btn-border: 2px solid rgba(255, 255, 255, 0.80);
     --btn-shadow: 0 15px 35px rgba(120, 90, 70, 0.18);
-    
-    /* Tombol Hover */
     --btn-hover-bg: linear-gradient(135deg, rgba(255, 251, 242, 0.85) 0%, rgba(238, 220, 198, 0.70) 100%);
 }
 
@@ -124,19 +88,68 @@ body.theme-desert {
     }
 
     body {
-        /* Menggunakan font Fredoka dari Google Fonts */
         font-family: 'Fredoka', sans-serif;
-        font-weight: 500; /* Set default ke Medium */
+        font-weight: 500;
         height: 100vh;
         width: 100vw;
         display: flex;
         justify-content: center;
-        background-image: var(--bg-image);
+        background-image: none; /* video backgrounds handle all themes */
         background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
         overflow: hidden;
-        transition: background-image 0.5s ease;
+        position: relative;
+    }
+
+    /* ── Sky Video Background (Cloudy / default theme) ── */
+    #skyVideoBg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        display: block; /* visible by default (cloudy) */
+        pointer-events: none;
+    }
+
+    /* Hide sky video when a non-cloudy theme is active */
+    body.theme-emerald #skyVideoBg,
+    body.theme-desert #skyVideoBg {
+        display: none;
+    }
+
+    /* ── Desert Video Background ── */
+    #desertVideoBg {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 0;
+        display: none;
+        pointer-events: none;
+    }
+
+    body.theme-desert #desertVideoBg {
+        display: block;
+    }
+
+    /* When desert theme is active, suppress the CSS bg-image so video shows cleanly */
+    body.theme-desert {
+        background-image: none; /* already none on body, kept for clarity */
+    }
+
+    /* Everything above the video */
+    .container,
+    footer,
+    .theme-btn,
+    .theme-panel {
+        position: relative;
+        z-index: 1;
     }
 
     .container {
@@ -178,7 +191,6 @@ body.theme-desert {
         pointer-events: none;
     }
 
-    /* ── Grup tombol kiri bawah ── */
     .footer-left {
         position: fixed;
         bottom: 40px;
@@ -193,7 +205,7 @@ body.theme-desert {
         background: var(--btn-bg);
         color: var(--btn-color);
         border: var(--btn-border);
-        padding: 18px; /* Ikon saja */
+        padding: 18px;
         border-radius: 20px;
         cursor: pointer;
         font-size: 27px;
@@ -215,7 +227,6 @@ body.theme-desert {
 
     .reset-btn img, .back-btn img { width: 38px; height: 38px; }
 
-    /* ── Solusi Grid Merapat ke Tengah ── */
     .fruits-grid, .branch-grid {
         display: flex;
         flex-wrap: wrap;
@@ -355,7 +366,6 @@ body.theme-desert {
     .theme-btn:hover { transform: translateY(-8px); }
     .theme-btn img { width: 38px; height: 38px; }
 
-    /* Theme panel */
     .theme-panel {
         position: fixed;
         bottom: 110px;
@@ -451,6 +461,15 @@ body.theme-desert {
 </style>
 </head>
 <body>
+
+    <!-- Sky video background (Cloudy / default theme) -->
+    <video id="skyVideoBg" src="https://ahsan.tv/wp-content/uploads/2026/06/sky.webm"
+           autoplay muted loop playsinline preload="auto"></video>
+
+    <!-- Desert video background (hidden by default, shown via body.theme-desert) -->
+    <video id="desertVideoBg" src="https://ahsan.tv/wp-content/uploads/2026/06/dessert.webm"
+           autoplay muted loop playsinline preload="auto"></video>
+
     <div class="container">
         <div></div>
         <main class="page-wrapper" id="pageContent">
@@ -492,7 +511,6 @@ body.theme-desert {
         </main>
     </div>
 
-    <!-- Footer dengan tombol Reset & Kembali di kiri bawah -->
     <footer>
         <div class="footer-left">
             <button class="reset-btn" id="resetBtn" onclick="resetAll()" aria-label="Reset Ulang Quiz">
@@ -505,7 +523,6 @@ body.theme-desert {
         </div>
     </footer>
 
-    <!-- Theme panel -->
     <div class="theme-panel" id="themePanel">
         <div class="theme-option theme-cloudy" onclick="applyTheme('cloudy')" id="opt-cloudy">
             <span class="dot"></span>
@@ -521,7 +538,6 @@ body.theme-desert {
         </div>
     </div>
 
-    <!-- Theme toggle button -->
     <button class="theme-btn" id="themeBtn" onclick="toggleThemePanel()" aria-label="Ganti Tema">
         <img src="https://ahsan.tv/wp-content/uploads/2026/06/theme.webp" alt="Theme">
     </button>
@@ -535,29 +551,29 @@ body.theme-desert {
         let audioEnabled = false;
 
         const contentData = {
-                pineapple: [
-                "وَصَدَّقَ بِالْحُسْنَىٰ",
-                "وَمَا يُغْنِي عَنْهُ مَالُهُۥٓ إِذَا تَرَدَّىٰٓ",
-                "فَأَلْهَمَهَا فُجُورَهَا وَتَقْوَاهَا",
-                "قَدْ أَفْلَحَ مَن زَكَّاهَا",
-                "أَيَحْسَبُ أَن لَّن يَقْدِرَ عَلَيْهِ أَحَدٌ",
-                "أَلَمْ نَجْعَل لَّهُ عَيْنَيْنِ",
-                "وَهَدَيْنَاهُ النَّجْدَيْنِ",
-                "الَّذِينَ طَغَوْا فِي الْبِلَادِ",
-                "فَأَكْثَرُوا فِيهَا الْفَسَادَ",
-                "إِنَّ رَبَّكَ لَبِالْمِرْصَادِ",
-                "فِي جَنَّةٍ عَالِيَةٍ",
-                "تُسْقَىٰ مِنْ عَيْنٍ آنِيَةٍ",
-                "سَنُقْرِئُكَ فَلَا تَنسَىٰ",
-                "وَنُيَسِّرُكَ لِلْيُسْرَىٰ",
-                "إِنَّهُ عَلَىٰ رَجْعِهِ لَقَادِرٌ",
-                "يَوْمَ تُبْلَى السَّرَائِرُ",
-                "الَّذِي أَنقَضَ ظَهْرَكَ",
-                "وَرَفَعْنَا لَكَ ذِكْرَكَ",
-                "لَقَدْ خَلَقْنَا الْإِنسَانَ فِي أَحْسَنِ تَقْوِيمٍ",
-                "ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ",
-                "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ"
-            ],
+            pineapple: [
+            "وَصَدَّقَ بِالْحُسْنَىٰ",
+            "وَمَا يُغْنِي عَنْهُ مَالُهُۥٓ إِذَا تَرَدَّىٰٓ",
+            "فَأَلْهَمَهَا فُجُورَهَا وَتَقْوَاهَا",
+            "قَدْ أَفْلَحَ مَن زَكَّاهَا",
+            "أَيَحْسَبُ أَن لَّن يَقْدِرَ عَلَيْهِ أَحَدٌ",
+            "أَلَمْ نَجْعَل لَّهُ عَيْنَيْنِ",
+            "وَهَدَيْنَاهُ النَّجْدَيْنِ",
+            "الَّذِينَ طَغَوْا فِي الْبِلَادِ",
+            "فَأَكْثَرُوا فِيهَا الْفَسَادَ",
+            "إِنَّ رَبَّكَ لَبِالْمِرْصَادِ",
+            "فِي جَنَّةٍ عَالِيَةٍ",
+            "تُسْقَىٰ مِنْ عَيْنٍ آنِيَةٍ",
+            "سَنُقْرِئُكَ فَلَا تَنسَىٰ",
+            "وَنُيَسِّرُكَ لِلْيُسْرَىٰ",
+            "إِنَّهُ عَلَىٰ رَجْعِهِ لَقَادِرٌ",
+            "يَوْمَ تُبْلَى السَّرَائِرُ",
+            "الَّذِي أَنقَضَ ظَهْرَكَ",
+            "وَرَفَعْنَا لَكَ ذِكْرَكَ",
+            "لَقَدْ خَلَقْنَا الْإِنسَانَ فِي أَحْسَنِ تَقْوِيمٍ",
+            "ثُمَّ رَدَدْنَاهُ أَسْفَلَ سَافِلِينَ",
+            "أَلَمْ يَجْعَلْ كَيْدَهُمْ فِي تَضْلِيلٍ"
+        ],
             apple: ['Hadits Senyum adalah sedekah', 'Hadits larangan marah', 'Hadits larangan minum sambil berdiri', 'Hadits niat'],
             watermelon: ['Doa keluar masjid', 'Doa setelah hujan reda', 'Doa sesudah makan', 'Doa bangun tidur', 'Doa menggunakan baju'],
             orange: ['Bintang', 'Kursi', 'Ayam', 'Jagung', 'Pepaya']
@@ -709,15 +725,25 @@ body.theme-desert {
         function applyTheme(theme) {
             playClick();
             const body = document.body;
+            const skyVideo = document.getElementById('skyVideoBg');
+            const desertVideo = document.getElementById('desertVideoBg');
 
             // Remove all theme classes
             body.classList.remove('theme-emerald', 'theme-desert');
 
-            // Apply selected theme
+            // Apply selected theme and control videos
             if (theme === 'emerald') {
                 body.classList.add('theme-emerald');
+                skyVideo.pause();
+                desertVideo.pause();
             } else if (theme === 'desert') {
                 body.classList.add('theme-desert');
+                skyVideo.pause();
+                desertVideo.play().catch(() => {});
+            } else {
+                // cloudy (default)
+                skyVideo.play().catch(() => {});
+                desertVideo.pause();
             }
 
             // Save to localStorage
