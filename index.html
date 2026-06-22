@@ -521,6 +521,15 @@
             </div>
             Benda Sehari-hari
         </div>
+        <div class="iconset-option" onclick="applyIconSet('places')" id="iconopt-places">
+            <div class="preview-icons">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/06/gunung.webp" alt="">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/06/pantai.webp" alt="">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/06/danau.webp" alt="">
+                <img src="https://ahsan.tv/wp-content/uploads/2026/06/pulau.webp" alt="">
+            </div>
+            Tempat & Alam
+        </div>
     </div>
 
     <!-- Icon Set toggle button -->
@@ -650,6 +659,34 @@
                     { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/gunting.webp', label: 'Gunting' },
                     { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/palu.webp', label: 'Palu' },
                 ],
+            },
+            places: {
+                pineapple: [
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/air-terjun.webp', label: 'Air Terjun' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/danau.webp', label: 'Danau' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/gunung.webp', label: 'Gunung' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/gurun.webp', label: 'Gurun' },
+                ],
+                apple: [
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/glasier.webp', label: 'Glasier' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/hutan.webp', label: 'Goa' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/laut.webp', label: 'Laut' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/lembah.webp', label: 'Lembah' },
+                ],
+                watermelon: [
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/mata-air.webp', label: 'Mata Air' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/oasis.webp', label: 'Oasis' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/padang-rumput.webp', label: 'Padang Rumput' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/pantai.webp', label: 'Pantai' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/pulau.webp', label: 'Pulau' },
+                ],
+                orange: [
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/rawa.webp', label: 'Rawa' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/sawah.webp', label: 'Sawah' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/goa.webp', label: 'Goa' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/sungai.webp', label: 'Sungai' },
+                    { icon: 'https://ahsan.tv/wp-content/uploads/2026/06/tebing.webp', label: 'Tebing' },
+                ],
             }
         };
 
@@ -667,7 +704,8 @@
             const previews = {
                 vehicles: 'https://ahsan.tv/wp-content/uploads/2026/06/pemadam.webp',
                 fruits:   'https://ahsan.tv/wp-content/uploads/2026/05/pineapple.webp',
-                items:    'https://ahsan.tv/wp-content/uploads/2026/06/ransel.webp'
+                items:    'https://ahsan.tv/wp-content/uploads/2026/06/ransel.webp',
+                places:   'https://ahsan.tv/wp-content/uploads/2026/06/gunung.webp'
             };
             document.getElementById('iconsetBtnImg').src = previews[setName];
 
